@@ -1,5 +1,5 @@
-#include "gepch.h"
 #include "WindowsWindow.h"
+#include "GameEngine/Log.h"
 
 namespace GameEngine {
 	static bool s_GLFWInitialized = false;
