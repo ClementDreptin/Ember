@@ -2,9 +2,6 @@
 
 #include "GameEngine/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace GameEngine {
 	enum class EventType {
 		None = 0,
