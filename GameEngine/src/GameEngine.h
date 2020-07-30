@@ -5,5 +5,5 @@
 
 // GameEngine libraries
 #include "GameEngine/App.h"
-#include "GameEngine/Log.h"
+#include "gepch.h"
 #include "GameEngine/EntryPoint.h"
