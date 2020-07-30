@@ -50,7 +50,7 @@ namespace GameEngine {
 		
 		}
 
-		template<typename T, typename F>
+		template<typename T>
 		bool dispatch(EventFn<T> func) {
 			if (m_Event.getEventType() == T::getStaticType()) {
 				m_Event.m_Handled = func(*(T*)&m_Event);
