@@ -1,5 +1,7 @@
 #include "App.h"
 
+#include "GameEngine/Log.h"
+
 namespace GameEngine {
 	App::App() {
 
