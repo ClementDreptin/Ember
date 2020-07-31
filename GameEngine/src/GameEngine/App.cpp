@@ -17,17 +17,33 @@ namespace GameEngine {
 
 	}
 
+	void App::pushLayer(Layer* layer) {
+		m_LayerStack.pushLayer(layer);
+	}
+
+	void App::pushOverlay(Layer* overlay) {
+		m_LayerStack.pushOverlay(overlay);
+	}
+
 	void App::onEvent(Event& e) {
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
 
-		GE_CORE_TRACE("{0}", e);
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+			(*--it)->onEvent(e);
+			if (e.m_Handled)
+				break;
+		}
 	}
 
 	void App::run() {
 		while (m_Running) {
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			for (Layer* layer : m_LayerStack)
+				layer->onUpdate();
+
 			m_Window->onUpdate();
 		}
 	}
