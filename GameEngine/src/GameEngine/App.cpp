@@ -3,7 +3,7 @@
 
 #include "GameEngine/Log.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace GameEngine {
 	#define BIND_EVENT_FN(x) std::bind(&App::x, this, std::placeholders::_1)
