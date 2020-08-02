@@ -91,6 +91,13 @@ namespace GameEngine {
 			}
 		});
 
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keyCode) {
+			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			KeyTypedEvent event(keyCode);
+			windowData.eventCallback(event);
+		});
+
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 

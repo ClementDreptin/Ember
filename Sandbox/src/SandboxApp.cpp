@@ -17,6 +17,7 @@ class Sandbox : public GameEngine::App {
 public:
 	Sandbox() {
 		pushLayer(new ExampleLayer());
+		pushOverlay(new GameEngine::ImGuiLayer());
 	}
 
 	~Sandbox() {
