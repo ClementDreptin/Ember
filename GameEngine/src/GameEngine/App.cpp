@@ -5,6 +5,8 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
+
 namespace GameEngine {
 	App* App::s_Instance = nullptr;
 
