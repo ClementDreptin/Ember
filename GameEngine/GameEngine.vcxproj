@@ -161,11 +161,15 @@
     <ClInclude Include="src\GameEngine\Events\KeyEvent.h" />
     <ClInclude Include="src\GameEngine\Events\MouseEvent.h" />
     <ClInclude Include="src\GameEngine\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\GameEngine\Input.h" />
+    <ClInclude Include="src\GameEngine\KeyCodes.h" />
     <ClInclude Include="src\GameEngine\Layer.h" />
     <ClInclude Include="src\GameEngine\LayerStack.h" />
     <ClInclude Include="src\GameEngine\Log.h" />
+    <ClInclude Include="src\GameEngine\MouseButtonCodes.h" />
     <ClInclude Include="src\GameEngine\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\gepch.h" />
   </ItemGroup>
@@ -176,6 +180,7 @@
     <ClCompile Include="src\GameEngine\LayerStack.cpp" />
     <ClCompile Include="src\GameEngine\Log.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\gepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
