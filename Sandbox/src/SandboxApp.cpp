@@ -1,11 +1,17 @@
 #include <GameEngine.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public GameEngine::Layer {
 public:
 	ExampleLayer() : Layer("Example") {}
 
-	void onUpdate() override {
-		GE_INFO("ExampleLayer::onUpdate");
+	void onUpdate() override {}
+
+	virtual void onImGuiRender() override {
+		ImGui::Begin("test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 
 	void onEvent(GameEngine::Event& event) override {
@@ -17,7 +23,6 @@ class Sandbox : public GameEngine::App {
 public:
 	Sandbox() {
 		pushLayer(new ExampleLayer());
-		pushOverlay(new GameEngine::ImGuiLayer());
 	}
 
 	~Sandbox() {
