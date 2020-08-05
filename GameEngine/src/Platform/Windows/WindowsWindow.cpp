@@ -32,7 +32,7 @@ namespace GameEngine {
 		m_Data.width = props.width;
 		m_Data.height = props.height;
 
-		GE_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
+		GE_CORE_INFO("Creating window \"{0}\" ({1}, {2})", props.title, props.width, props.height);
 
 		if (!s_GLFWInitialized) {
 			int success = glfwInit();
