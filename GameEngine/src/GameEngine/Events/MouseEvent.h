@@ -3,7 +3,7 @@
 #include "Event.h"
 
 namespace GameEngine {
-	class GE_API MouseMovedEvent : public Event {
+	class MouseMovedEvent : public Event {
 	public:
 		MouseMovedEvent(float x, float y) : m_MouseX(x), m_MouseY(y) {}
 
@@ -23,7 +23,7 @@ namespace GameEngine {
 		float m_MouseX, m_MouseY;
 	};
 
-	class GE_API MouseScrolledEvent : public Event {
+	class MouseScrolledEvent : public Event {
 	public:
 		MouseScrolledEvent(float xOffset, float yOffset) : m_XOffset(xOffset), m_YOffset(yOffset) {}
 
@@ -43,7 +43,7 @@ namespace GameEngine {
 		float m_XOffset, m_YOffset;
 	};
 
-	class GE_API MouseButtonEvent : public Event {
+	class MouseButtonEvent : public Event {
 	public:
 		inline int getMouseButton() const { return m_Button; }
 
@@ -55,7 +55,7 @@ namespace GameEngine {
 		int m_Button;
 	};
 
-	class GE_API MouseButtonPressedEvent : public MouseButtonEvent {
+	class MouseButtonPressedEvent : public MouseButtonEvent {
 	public:
 		MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
 
@@ -68,7 +68,7 @@ namespace GameEngine {
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class GE_API MouseButtonReleasedEvent : public MouseButtonEvent {
+	class MouseButtonReleasedEvent : public MouseButtonEvent {
 	public:
 		MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
 

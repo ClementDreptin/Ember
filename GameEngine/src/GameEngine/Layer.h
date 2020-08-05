@@ -4,7 +4,7 @@
 #include "GameEngine/Events/Event.h"
 
 namespace GameEngine {
-	class GE_API Layer {
+	class Layer {
 	public:
 		Layer(const std::string& name = "Layer");
 		virtual ~Layer();

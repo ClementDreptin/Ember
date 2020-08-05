@@ -6,7 +6,7 @@
 #include "GameEngine/Events/MouseEvent.h"
 
 namespace GameEngine {
-	class GE_API ImGuiLayer : public Layer {
+	class ImGuiLayer : public Layer {
 	public:
 		ImGuiLayer();
 		~ImGuiLayer();

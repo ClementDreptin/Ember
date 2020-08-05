@@ -10,7 +10,7 @@
 #include "GameEngine/ImGui/ImGuiLayer.h"
 
 namespace GameEngine {
-	class GE_API App {
+	class App {
 	public:
 		App();
 		virtual ~App();

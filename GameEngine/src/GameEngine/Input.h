@@ -3,7 +3,7 @@
 #include "GameEngine/Core.h"
 
 namespace GameEngine {
-	class GE_API Input {
+	class Input {
 	public:
 		inline static bool isKeyPressed(int keyCode) { return s_Instance->isKeyPressedImpl(keyCode); }
 
