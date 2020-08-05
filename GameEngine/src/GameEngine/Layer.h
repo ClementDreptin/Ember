@@ -12,6 +12,7 @@ namespace GameEngine {
 		virtual void onAttach() {}
 		virtual void onDetach() {}
 		virtual void onUpdate() {}
+		virtual void onImGuiRender() {}
 		virtual void onEvent(Event& event) {}
 
 		inline const std::string& getName() { return m_DebugName; }
