@@ -9,6 +9,9 @@
 
 #include "GameEngine/ImGui/ImGuiLayer.h"
 
+// TEMPORARY
+#include "GameEngine/Renderer/Shader.h"
+
 namespace GameEngine {
 	class App {
 	public:
@@ -35,6 +38,7 @@ namespace GameEngine {
 		static App* s_Instance;
 
 		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 	};
 
 	// To be defined in a Client
