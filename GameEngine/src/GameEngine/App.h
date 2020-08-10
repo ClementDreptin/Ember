@@ -11,6 +11,7 @@
 
 // TEMPORARY
 #include "GameEngine/Renderer/Shader.h"
+#include "GameEngine/Renderer/Buffer.h"
 
 namespace GameEngine {
 	class App {
@@ -37,7 +38,9 @@ namespace GameEngine {
 
 		static App* s_Instance;
 
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		unsigned int m_VertexArray;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;
 	};
 
