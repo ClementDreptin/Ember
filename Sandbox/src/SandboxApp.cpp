@@ -9,9 +9,9 @@ public:
 	void onUpdate() override {}
 
 	virtual void onImGuiRender() override {
-		ImGui::Begin("test");
-		ImGui::Text("Hello World");
-		ImGui::End();
+		//ImGui::Begin("test");
+		//ImGui::Text("Hello World");
+		//ImGui::End();
 	}
 
 	void onEvent(GameEngine::Event& event) override {

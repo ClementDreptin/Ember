@@ -78,6 +78,6 @@ namespace GameEngine {
 
     void ImGuiLayer::onImGuiRender() {
         static bool show = true;
-        ImGui::ShowDemoWindow(&show);
+        //ImGui::ShowDemoWindow(&show);
     }
 }
