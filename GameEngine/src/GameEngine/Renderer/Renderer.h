@@ -1,15 +1,15 @@
 #pragma once
 
-namespace GameEngine {
-	enum class RendererAPI {
-		None = 0, OpenGL = 1, 
-	};
+#include "RenderCommand.h"
 
+namespace GameEngine {
 	class Renderer {
 	public:
-		static inline RendererAPI getAPI() { return s_RendererAPI; }
+		static void beginScene();
+		static void endScene();
 
-	private:
-		static RendererAPI s_RendererAPI;
+		static void submit(const std::shared_ptr<VertexArray> vertexArray);
+
+		static inline RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 	};
 }
