@@ -6,6 +6,8 @@
 #include "GameEngine/Layer.h"
 #include "GameEngine/Log.h"
 
+#include "GameEngine/Core/Timestep.h"
+
 #include "GameEngine/Input.h"
 #include "GameEngine/KeyCodes.h"
 #include "GameEngine/MouseButtonCodes.h"

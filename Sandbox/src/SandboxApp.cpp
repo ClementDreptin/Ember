@@ -116,23 +116,23 @@ public:
 		// Square - END
 	}
 
-	void onUpdate() override {
+	void onUpdate(GameEngine::Timestep timestep) override {
 		if (GameEngine::Input::isKeyPressed(GE_KEY_LEFT)) {
-			m_CameraPosition.x -= m_CameraMoveSpeed;
+			m_CameraPosition.x -= m_CameraMoveSpeed * timestep;
 		} else if (GameEngine::Input::isKeyPressed(GE_KEY_RIGHT)) {
-			m_CameraPosition.x += m_CameraMoveSpeed;
+			m_CameraPosition.x += m_CameraMoveSpeed * timestep;
 		}
 
 		if (GameEngine::Input::isKeyPressed(GE_KEY_UP)) {
-			m_CameraPosition.y -= m_CameraMoveSpeed;
+			m_CameraPosition.y -= m_CameraMoveSpeed * timestep;
 		} else if (GameEngine::Input::isKeyPressed(GE_KEY_DOWN)) {
-			m_CameraPosition.y += m_CameraMoveSpeed;
+			m_CameraPosition.y += m_CameraMoveSpeed * timestep;
 		}
 
 		if (GameEngine::Input::isKeyPressed(GE_KEY_A)) {
-			m_CameraRotation -= (m_CameraRotationSpeed);	
+			m_CameraRotation -= m_CameraRotationSpeed * timestep;
 		} else if (GameEngine::Input::isKeyPressed(GE_KEY_D)) {
-			m_CameraRotation += (m_CameraRotationSpeed);
+			m_CameraRotation += m_CameraRotationSpeed * timestep;
 		}
 
 

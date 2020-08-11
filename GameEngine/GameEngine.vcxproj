@@ -143,6 +143,7 @@
     <ClInclude Include="src\GameEngine.h" />
     <ClInclude Include="src\GameEngine\App.h" />
     <ClInclude Include="src\GameEngine\Core.h" />
+    <ClInclude Include="src\GameEngine\Core\Timestep.h" />
     <ClInclude Include="src\GameEngine\EntryPoint.h" />
     <ClInclude Include="src\GameEngine\Events\AppEvent.h" />
     <ClInclude Include="src\GameEngine\Events\Event.h" />

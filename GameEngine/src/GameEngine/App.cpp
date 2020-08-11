@@ -7,6 +7,8 @@
 
 #include "Input.h"
 
+#include <GLFW/glfw3.h>
+
 namespace GameEngine {
 	App* App::s_Instance = nullptr;
 
@@ -48,8 +50,12 @@ namespace GameEngine {
 
 	void App::run() {
 		while (m_Running) {
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
 			for (Layer* layer : m_LayerStack)
-				layer->onUpdate();
+				layer->onUpdate(timestep);
 
 			m_ImGuiLayer->begin();
 			for (Layer* layer : m_LayerStack)

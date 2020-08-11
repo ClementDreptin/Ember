@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameEngine/Core.h"
+#include "GameEngine/Core/Timestep.h"
 #include "GameEngine/Events/Event.h"
 
 namespace GameEngine {
@@ -11,7 +12,7 @@ namespace GameEngine {
 
 		virtual void onAttach() {}
 		virtual void onDetach() {}
-		virtual void onUpdate() {}
+		virtual void onUpdate(Timestep timestep) {}
 		virtual void onImGuiRender() {}
 		virtual void onEvent(Event& event) {}
 
