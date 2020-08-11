@@ -7,13 +7,10 @@
 
 #include "Input.h"
 
-#include "Platform/Windows/WindowsInput.h"
-#include "KeyCodes.h"
-
 namespace GameEngine {
 	App* App::s_Instance = nullptr;
 
-	App::App() : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) {
+	App::App() {
 		GE_CORE_ASSERT(!s_Instance, "App already exists!");
 		s_Instance = this;
 
@@ -22,116 +19,6 @@ namespace GameEngine {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		pushOverlay(m_ImGuiLayer);
-
-		m_VertexArray.reset(VertexArray::create());
-
-		// Triangle - START
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.2f, 0.2f, 0.8f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-		};
-
-		std::shared_ptr<VertexBuffer> triangleVertexBuffer;
-		triangleVertexBuffer.reset(VertexBuffer::create(vertices, sizeof(vertices)));
-		BufferLayout layout = {
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float4, "a_Color" }
-		};
-		triangleVertexBuffer->setLayout(layout);
-		m_VertexArray->addVertexBuffer(triangleVertexBuffer);
-
-		uint32_t triangleIndices[3] = { 0, 1, 2 };
-		std::shared_ptr<IndexBuffer> triangleIndexBuffer;
-		triangleIndexBuffer.reset(IndexBuffer::create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t)));
-		m_VertexArray->setIndexBuffer(triangleIndexBuffer);
-
-		std::string vertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			uniform mat4 u_ViewProjection;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main() {
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
-			}
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main() {
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);
-				color = v_Color;
-			}
-		)";
-
-		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
-		// Triangle - END
-
-		// Square - START
-		m_SquareVertexArray.reset(VertexArray::create());
-		float squareVertices[3 * 4] = {
-			-0.75f, -0.75f, 0.0f,
-			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			-0.75f,  0.75f, 0.0f
-		};
-
-		std::shared_ptr<VertexBuffer> squareVertexBuffer;
-		squareVertexBuffer.reset(VertexBuffer::create(squareVertices, sizeof(squareVertices)));
-		BufferLayout squareLayout = {
-			{ ShaderDataType::Float3, "a_Position" }
-		};
-		squareVertexBuffer->setLayout(squareLayout);
-		m_SquareVertexArray->addVertexBuffer(squareVertexBuffer);
-
-		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<IndexBuffer> squareIndexBuffer;
-		squareIndexBuffer.reset(IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
-		m_SquareVertexArray->setIndexBuffer(squareIndexBuffer);
-
-		std::string blueShaderVertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-
-			uniform mat4 u_ViewProjection;
-
-			out vec3 v_Position;
-
-			void main() {
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
-			}
-		)";
-
-		std::string blueShaderFragmentSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-
-			void main() {
-				color = vec4(0.2, 0.3, 0.8, 1.0);
-			}
-		)";
-
-		m_BlueShader.reset(new Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
-		// Square - END
 	}
 
 	App::~App() {
@@ -161,34 +48,6 @@ namespace GameEngine {
 
 	void App::run() {
 		while (m_Running) {
-			RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-			RenderCommand::clear();
-
-			if (Input::isKeyPressed(GE_KEY_W)) {
-				m_Camera.setPosition({ 0.0f, 0.1f, 0.0f });
-			}
-
-			if (Input::isKeyPressed(GE_KEY_A)) {
-				GE_CORE_INFO("Q is pressed!");
-				m_Camera.setPosition({ -0.1f, 0.0f, 0.0f });
-			}
-
-			if (Input::isKeyPressed(GE_KEY_S)) {
-				m_Camera.setPosition({ 0.0f, -0.1f, 0.0f });
-			}
-
-			if (Input::isKeyPressed(GE_KEY_D)) {
-				m_Camera.setPosition({ 0.1f, 0.0f, 0.0f });
-			}
-
-			//m_Camera.setPosition({ 0.2f, 0.2f, 0.0f });
-			//m_Camera.setRotation({ 45.0f });
-
-			Renderer::beginScene(m_Camera);
-			Renderer::submit(m_BlueShader, m_SquareVertexArray);
-			Renderer::submit(m_Shader, m_VertexArray);
-			Renderer::endScene();
-
 			for (Layer* layer : m_LayerStack)
 				layer->onUpdate();
 
