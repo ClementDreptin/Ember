@@ -7,10 +7,13 @@
 
 #include "Input.h"
 
+#include "Platform/Windows/WindowsInput.h"
+#include "KeyCodes.h"
+
 namespace GameEngine {
 	App* App::s_Instance = nullptr;
 
-	App::App() {
+	App::App() : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) {
 		GE_CORE_ASSERT(!s_Instance, "App already exists!");
 		s_Instance = this;
 
@@ -49,13 +52,15 @@ namespace GameEngine {
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 
 			void main() {
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -103,11 +108,13 @@ namespace GameEngine {
 
 			layout(location = 0) in vec3 a_Position;
 
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 
 			void main() {
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -157,14 +164,29 @@ namespace GameEngine {
 			RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			RenderCommand::clear();
 
-			Renderer::beginScene();
+			if (Input::isKeyPressed(GE_KEY_W)) {
+				m_Camera.setPosition({ 0.0f, 0.1f, 0.0f });
+			}
 
-			m_BlueShader->bind();
-			Renderer::submit(m_SquareVertexArray);
+			if (Input::isKeyPressed(GE_KEY_A)) {
+				GE_CORE_INFO("Q is pressed!");
+				m_Camera.setPosition({ -0.1f, 0.0f, 0.0f });
+			}
 
-			m_Shader->bind();
-			Renderer::submit(m_VertexArray);
+			if (Input::isKeyPressed(GE_KEY_S)) {
+				m_Camera.setPosition({ 0.0f, -0.1f, 0.0f });
+			}
 
+			if (Input::isKeyPressed(GE_KEY_D)) {
+				m_Camera.setPosition({ 0.1f, 0.0f, 0.0f });
+			}
+
+			//m_Camera.setPosition({ 0.2f, 0.2f, 0.0f });
+			//m_Camera.setRotation({ 45.0f });
+
+			Renderer::beginScene(m_Camera);
+			Renderer::submit(m_BlueShader, m_SquareVertexArray);
+			Renderer::submit(m_Shader, m_VertexArray);
 			Renderer::endScene();
 
 			for (Layer* layer : m_LayerStack)
