@@ -18,7 +18,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		std::shared_ptr<GameEngine::VertexBuffer> triangleVertexBuffer;
+		GameEngine::Ref<GameEngine::VertexBuffer> triangleVertexBuffer;
 		triangleVertexBuffer.reset(GameEngine::VertexBuffer::create(vertices, sizeof(vertices)));
 		GameEngine::BufferLayout layout = {
 			{ GameEngine::ShaderDataType::Float3, "a_Position" },
@@ -28,7 +28,7 @@ public:
 		m_VertexArray->addVertexBuffer(triangleVertexBuffer);
 
 		uint32_t triangleIndices[3] = { 0, 1, 2 };
-		std::shared_ptr<GameEngine::IndexBuffer> triangleIndexBuffer;
+		GameEngine::Ref<GameEngine::IndexBuffer> triangleIndexBuffer;
 		triangleIndexBuffer.reset(GameEngine::IndexBuffer::create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t)));
 		m_VertexArray->setIndexBuffer(triangleIndexBuffer);
 
@@ -77,7 +77,7 @@ public:
 			-0.5f,  0.5f, 0.0f
 		};
 
-		std::shared_ptr<GameEngine::VertexBuffer> squareVertexBuffer;
+		GameEngine::Ref<GameEngine::VertexBuffer> squareVertexBuffer;
 		squareVertexBuffer.reset(GameEngine::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
 		GameEngine::BufferLayout squareLayout = {
 			{ GameEngine::ShaderDataType::Float3, "a_Position" }
@@ -86,7 +86,7 @@ public:
 		m_SquareVertexArray->addVertexBuffer(squareVertexBuffer);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<GameEngine::IndexBuffer> squareIndexBuffer;
+		GameEngine::Ref<GameEngine::IndexBuffer> squareIndexBuffer;
 		squareIndexBuffer.reset(GameEngine::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVertexArray->setIndexBuffer(squareIndexBuffer);
 
@@ -177,11 +177,11 @@ public:
 
 	void onEvent(GameEngine::Event& event) override {}
 private:
-	std::shared_ptr<GameEngine::Shader> m_Shader;
-	std::shared_ptr<GameEngine::VertexArray> m_VertexArray;
+	GameEngine::Ref<GameEngine::Shader> m_Shader;
+	GameEngine::Ref<GameEngine::VertexArray> m_VertexArray;
 
-	std::shared_ptr<GameEngine::Shader> m_FlatColorShader;
-	std::shared_ptr<GameEngine::VertexArray> m_SquareVertexArray;
+	GameEngine::Ref<GameEngine::Shader> m_FlatColorShader;
+	GameEngine::Ref<GameEngine::VertexArray> m_SquareVertexArray;
 
 	GameEngine::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
