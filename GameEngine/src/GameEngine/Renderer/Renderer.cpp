@@ -1,6 +1,8 @@
 #include "gepch.h"
 #include "Renderer.h"
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 namespace GameEngine {
 	Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
 
@@ -12,8 +14,8 @@ namespace GameEngine {
 
 	void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray> vertexArray, const glm::mat4& transform) {
 		shader->bind();
-		shader->uploadUniformMat4("u_ViewProjection", m_SceneData->viewProjectionMatrix);
-		shader->uploadUniformMat4("u_Transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_ViewProjection", m_SceneData->viewProjectionMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniformMat4("u_Transform", transform);
 
 		vertexArray->bind();
 		RenderCommand::drawIndexed(vertexArray);
