@@ -158,6 +158,7 @@ public:
 		m_TextureShader = GameEngine::Shader::create(textureShaderVertexSrc, textureShaderFragmentSrc);
 
 		m_Texture = GameEngine::Texture2D::create("assets/textures/checkerboard.png");
+		m_ChernoLogoTexture = GameEngine::Texture2D::create("assets/textures/ChernoLogo.png");
 
 		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_TextureShader)->bind();
 		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_TextureShader)->uploadUniformInt("u_Texture", 0);
@@ -206,6 +207,8 @@ public:
 
 		m_Texture->bind();
 		GameEngine::Renderer::submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		m_ChernoLogoTexture->bind();
+		GameEngine::Renderer::submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		//GameEngine::Renderer::submit(m_Shader, m_VertexArray);
 
@@ -226,7 +229,7 @@ private:
 	GameEngine::Ref<GameEngine::Shader> m_FlatColorShader, m_TextureShader;
 	GameEngine::Ref<GameEngine::VertexArray> m_SquareVertexArray;
 
-	GameEngine::Ref<GameEngine::Texture2D> m_Texture;
+	GameEngine::Ref<GameEngine::Texture2D> m_Texture, m_ChernoLogoTexture;
 
 	GameEngine::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
