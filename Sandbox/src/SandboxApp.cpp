@@ -70,17 +70,18 @@ public:
 
 		// Square - START
 		m_SquareVertexArray.reset(GameEngine::VertexArray::create());
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		GameEngine::Ref<GameEngine::VertexBuffer> squareVertexBuffer;
 		squareVertexBuffer.reset(GameEngine::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
 		GameEngine::BufferLayout squareLayout = {
-			{ GameEngine::ShaderDataType::Float3, "a_Position" }
+			{ GameEngine::ShaderDataType::Float3, "a_Position" },
+			{ GameEngine::ShaderDataType::Float2, "a_TextCoord" }
 		};
 		squareVertexBuffer->setLayout(squareLayout);
 		m_SquareVertexArray->addVertexBuffer(squareVertexBuffer);
@@ -122,6 +123,44 @@ public:
 
 		m_FlatColorShader.reset(GameEngine::Shader::create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
 		// Square - END
+
+		std::string textureShaderVertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TextCoord;
+
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+
+			out vec2 v_TextCoord;
+
+			void main() {
+				v_TextCoord = a_TextCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string textureShaderFragmentSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec2 v_TextCoord;
+
+			uniform sampler2D u_Texture;
+
+			void main() {
+				color = texture(u_Texture, v_TextCoord);
+			}
+		)";
+
+		m_TextureShader.reset(GameEngine::Shader::create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		m_Texture = GameEngine::Texture2D::create("assets/textures/checkerboard.png");
+
+		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_TextureShader)->bind();
+		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_TextureShader)->uploadUniformInt("u_Texture", 0);
 	}
 
 	void onUpdate(GameEngine::Timestep timestep) override {
@@ -164,6 +203,10 @@ public:
 				GameEngine::Renderer::submit(m_FlatColorShader, m_SquareVertexArray, transform);
 			}
 		}
+
+		m_Texture->bind();
+		GameEngine::Renderer::submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
 		//GameEngine::Renderer::submit(m_Shader, m_VertexArray);
 
 		GameEngine::Renderer::endScene();
@@ -180,8 +223,10 @@ private:
 	GameEngine::Ref<GameEngine::Shader> m_Shader;
 	GameEngine::Ref<GameEngine::VertexArray> m_VertexArray;
 
-	GameEngine::Ref<GameEngine::Shader> m_FlatColorShader;
+	GameEngine::Ref<GameEngine::Shader> m_FlatColorShader, m_TextureShader;
 	GameEngine::Ref<GameEngine::VertexArray> m_SquareVertexArray;
+
+	GameEngine::Ref<GameEngine::Texture2D> m_Texture;
 
 	GameEngine::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
