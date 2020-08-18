@@ -19,6 +19,8 @@ namespace GameEngine {
 		m_Window = std::unique_ptr<Window>(Window::create());
 		m_Window->setEventCallback(GE_BIND_EVENT_FN(App::onEvent));
 
+		Renderer::init();
+
 		m_ImGuiLayer = new ImGuiLayer();
 		pushOverlay(m_ImGuiLayer);
 	}
