@@ -17,6 +17,6 @@ namespace GameEngine {
 			s_RendererAPI->drawIndexed(vertexArray);
 		}
 	private:
-		static RendererAPI* s_RendererAPI;
+		static Ref<RendererAPI> s_RendererAPI;
 	};
 }

@@ -9,7 +9,7 @@
 class ExampleLayer : public GameEngine::Layer {
 public:
 	ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f) {
-		m_VertexArray.reset(GameEngine::VertexArray::create());
+		m_VertexArray = GameEngine::VertexArray::create();
 
 		// Triangle - START
 		float vertices[3 * 7] = {
@@ -19,7 +19,7 @@ public:
 		};
 
 		GameEngine::Ref<GameEngine::VertexBuffer> triangleVertexBuffer;
-		triangleVertexBuffer.reset(GameEngine::VertexBuffer::create(vertices, sizeof(vertices)));
+		triangleVertexBuffer = GameEngine::VertexBuffer::create(vertices, sizeof(vertices));
 		GameEngine::BufferLayout layout = {
 			{ GameEngine::ShaderDataType::Float3, "a_Position" },
 			{ GameEngine::ShaderDataType::Float4, "a_Color" }
@@ -29,7 +29,7 @@ public:
 
 		uint32_t triangleIndices[3] = { 0, 1, 2 };
 		GameEngine::Ref<GameEngine::IndexBuffer> triangleIndexBuffer;
-		triangleIndexBuffer.reset(GameEngine::IndexBuffer::create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t)));
+		triangleIndexBuffer = GameEngine::IndexBuffer::create(triangleIndices, sizeof(triangleIndices) / sizeof(uint32_t));
 		m_VertexArray->setIndexBuffer(triangleIndexBuffer);
 
 		std::string vertexSrc = R"(
@@ -65,11 +65,11 @@ public:
 			}
 		)";
 
-		m_Shader.reset(GameEngine::Shader::create(vertexSrc, fragmentSrc));
+		m_Shader = GameEngine::Shader::create(vertexSrc, fragmentSrc);
 		// Triangle - END
 
 		// Square - START
-		m_SquareVertexArray.reset(GameEngine::VertexArray::create());
+		m_SquareVertexArray = GameEngine::VertexArray::create();
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
 			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
@@ -78,7 +78,7 @@ public:
 		};
 
 		GameEngine::Ref<GameEngine::VertexBuffer> squareVertexBuffer;
-		squareVertexBuffer.reset(GameEngine::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
+		squareVertexBuffer = GameEngine::VertexBuffer::create(squareVertices, sizeof(squareVertices));
 		GameEngine::BufferLayout squareLayout = {
 			{ GameEngine::ShaderDataType::Float3, "a_Position" },
 			{ GameEngine::ShaderDataType::Float2, "a_TextCoord" }
@@ -88,7 +88,7 @@ public:
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		GameEngine::Ref<GameEngine::IndexBuffer> squareIndexBuffer;
-		squareIndexBuffer.reset(GameEngine::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareIndexBuffer = GameEngine::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVertexArray->setIndexBuffer(squareIndexBuffer);
 
 		std::string flatColorShaderVertexSrc = R"(
@@ -121,7 +121,7 @@ public:
 			}
 		)";
 
-		m_FlatColorShader.reset(GameEngine::Shader::create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+		m_FlatColorShader = GameEngine::Shader::create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 		// Square - END
 
 		std::string textureShaderVertexSrc = R"(
@@ -155,7 +155,7 @@ public:
 			}
 		)";
 
-		m_TextureShader.reset(GameEngine::Shader::create(textureShaderVertexSrc, textureShaderFragmentSrc));
+		m_TextureShader = GameEngine::Shader::create(textureShaderVertexSrc, textureShaderFragmentSrc);
 
 		m_Texture = GameEngine::Texture2D::create("assets/textures/checkerboard.png");
 
