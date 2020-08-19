@@ -4,9 +4,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+// SUPER TEMPORARY!!!
+typedef unsigned int GLenum;
+
 namespace GameEngine {
 	class OpenGLShader : public Shader {
 	public:
+		OpenGLShader(const std::string& path);
 		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
 		virtual ~OpenGLShader();
 
@@ -24,5 +28,9 @@ namespace GameEngine {
 		void uploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 	private:
 		uint32_t m_RendererID;
+
+		std::string readFile(const std::string& path);
+		std::unordered_map<GLenum, std::string> preProcess(const std::string& shaderSource);
+		void compile(const std::unordered_map<GLenum, std::string>& shaderSources);
 	};
 }
