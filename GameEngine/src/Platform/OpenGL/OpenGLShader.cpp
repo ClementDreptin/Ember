@@ -33,7 +33,7 @@ namespace GameEngine {
 
 	std::string OpenGLShader::readFile(const std::string& path) {
 		std::string result;
-		std::ifstream in(path, std::ios::in, std::ios::binary);
+		std::ifstream in(path, std::ios::in | std::ios::binary);
 
 		if (in) {
 			in.seekg(0, std::ios::end);
@@ -77,7 +77,9 @@ namespace GameEngine {
 
 	void OpenGLShader::compile(const std::unordered_map<GLenum, std::string>& shaderSources) {
 		GLuint program = glCreateProgram();
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
+		GE_CORE_ASSERT(shaderSources.size() <= 2, "Too many shaders!");
+		std::array<GLenum, 2> glShaderIDs;
+		int glShaderIndex = 0;
 
 		for (auto& kv : shaderSources) {
 			GLenum shaderType = kv.first;
@@ -108,8 +110,10 @@ namespace GameEngine {
 			}
 
 			glAttachShader(program, shader);
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIndex++] = shader;
 		}
+
+		m_RendererID = program;
 
 		// Link our program
 		glLinkProgram(program);
@@ -142,8 +146,6 @@ namespace GameEngine {
 		for (auto id : glShaderIDs) {
 			glDetachShader(program, id);
 		}
-
-		m_RendererID = program;
 	}
 
 	void OpenGLShader::bind() const {
