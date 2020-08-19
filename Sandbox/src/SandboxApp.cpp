@@ -65,7 +65,7 @@ public:
 			}
 		)";
 
-		m_Shader = GameEngine::Shader::create(vertexSrc, fragmentSrc);
+		m_Shader = GameEngine::Shader::create("VertexPosColor", vertexSrc, fragmentSrc);
 		// Triangle - END
 
 		// Square - START
@@ -121,16 +121,16 @@ public:
 			}
 		)";
 
-		m_FlatColorShader = GameEngine::Shader::create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
+		m_FlatColorShader = GameEngine::Shader::create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 		// Square - END
 
-		m_TextureShader = GameEngine::Shader::create("assets/shaders/Texture.glsl");
+		auto textureShader = m_ShaderLibrary.load("assets/shaders/Texture.glsl");
 
 		m_Texture = GameEngine::Texture2D::create("assets/textures/checkerboard.png");
 		m_ChernoLogoTexture = GameEngine::Texture2D::create("assets/textures/ChernoLogo.png");
 
-		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_TextureShader)->bind();
-		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_TextureShader)->uploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(textureShader)->bind();
+		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(textureShader)->uploadUniformInt("u_Texture", 0);
 	}
 
 	void onUpdate(GameEngine::Timestep timestep) override {
@@ -174,10 +174,12 @@ public:
 			}
 		}
 
+		auto textureShader = m_ShaderLibrary.get("Texture");
+
 		m_Texture->bind();
-		GameEngine::Renderer::submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		GameEngine::Renderer::submit(textureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		m_ChernoLogoTexture->bind();
-		GameEngine::Renderer::submit(m_TextureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		GameEngine::Renderer::submit(textureShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		//GameEngine::Renderer::submit(m_Shader, m_VertexArray);
 
@@ -192,10 +194,11 @@ public:
 
 	void onEvent(GameEngine::Event& event) override {}
 private:
+	GameEngine::ShaderLibrary m_ShaderLibrary;
 	GameEngine::Ref<GameEngine::Shader> m_Shader;
 	GameEngine::Ref<GameEngine::VertexArray> m_VertexArray;
 
-	GameEngine::Ref<GameEngine::Shader> m_FlatColorShader, m_TextureShader;
+	GameEngine::Ref<GameEngine::Shader> m_FlatColorShader;
 	GameEngine::Ref<GameEngine::VertexArray> m_SquareVertexArray;
 
 	GameEngine::Ref<GameEngine::Texture2D> m_Texture, m_ChernoLogoTexture;

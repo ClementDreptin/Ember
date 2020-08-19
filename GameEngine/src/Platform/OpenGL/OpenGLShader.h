@@ -11,11 +11,13 @@ namespace GameEngine {
 	class OpenGLShader : public Shader {
 	public:
 		OpenGLShader(const std::string& path);
-		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 		virtual ~OpenGLShader();
 
 		virtual void bind() const override;
 		virtual void unbind() const override;
+
+		virtual const std::string& getName() const override { return m_Name; };
 
 		void uploadUniformInt(const std::string& name, const int value);
 
@@ -28,6 +30,7 @@ namespace GameEngine {
 		void uploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 	private:
 		uint32_t m_RendererID;
+		std::string m_Name;
 
 		std::string readFile(const std::string& path);
 		std::unordered_map<GLenum, std::string> preProcess(const std::string& shaderSource);
