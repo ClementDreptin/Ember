@@ -1,10 +1,13 @@
 #include <GameEngine.h>
+#include <GameEngine/Core/EntryPoint.h>
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
 #include "imgui/imgui.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "Sandbox2D.h"
 
 class ExampleLayer : public GameEngine::Layer {
 public:
@@ -193,12 +196,11 @@ private:
 class Sandbox : public GameEngine::App {
 public:
 	Sandbox() {
-		pushLayer(new ExampleLayer());
+		//pushLayer(new ExampleLayer());
+		pushLayer(new Sandbox2D());
 	}
 
-	~Sandbox() {
-
-	}
+	~Sandbox() {}
 };
 
 GameEngine::App* GameEngine::CreateApp() {
