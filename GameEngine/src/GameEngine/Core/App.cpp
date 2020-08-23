@@ -1,7 +1,7 @@
 #include "gepch.h"
 #include "App.h"
 
-#include "GameEngine/Log.h"
+#include "GameEngine/Core/Log.h"
 
 #include "GameEngine/Renderer/Renderer.h"
 

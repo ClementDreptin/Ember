@@ -1,8 +1,8 @@
 #include "gepch.h"
 #include "OrthographicCameraController.h"
 
-#include "GameEngine/Input.h"
-#include "GameEngine/KeyCodes.h"
+#include "GameEngine/Core/Input.h"
+#include "GameEngine/Core/KeyCodes.h"
 
 namespace GameEngine {
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation) 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameEngine/Core.h"
+#include "GameEngine/Core/Core.h"
 #include "Layer.h"
 
 #include <vector>

@@ -1,6 +1,6 @@
 #include "gepch.h"
 #include "WindowsWindow.h"
-#include "GameEngine/Log.h"
+#include "GameEngine/Core/Log.h"
 
 #include "GameEngine/Events/AppEvent.h"
 #include "GameEngine/Events/MouseEvent.h"

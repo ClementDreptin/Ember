@@ -5,7 +5,7 @@
 #include "examples/imgui_impl_opengl3.cpp"
 #include "examples/imgui_impl_glfw.cpp"
 
-#include "GameEngine/App.h"
+#include "GameEngine/Core/App.h"
 
 // TEMPORARY
 #include <GLFW/glfw3.h>

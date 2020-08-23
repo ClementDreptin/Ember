@@ -141,32 +141,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\GameEngine.h" />
-    <ClInclude Include="src\GameEngine\App.h" />
-    <ClInclude Include="src\GameEngine\Core.h" />
+    <ClInclude Include="src\GameEngine\Core\App.h" />
+    <ClInclude Include="src\GameEngine\Core\Core.h" />
+    <ClInclude Include="src\GameEngine\Core\EntryPoint.h" />
+    <ClInclude Include="src\GameEngine\Core\Input.h" />
+    <ClInclude Include="src\GameEngine\Core\KeyCodes.h" />
+    <ClInclude Include="src\GameEngine\Core\Layer.h" />
+    <ClInclude Include="src\GameEngine\Core\LayerStack.h" />
+    <ClInclude Include="src\GameEngine\Core\Log.h" />
+    <ClInclude Include="src\GameEngine\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\GameEngine\Core\Timestep.h" />
-    <ClInclude Include="src\GameEngine\EntryPoint.h" />
+    <ClInclude Include="src\GameEngine\Core\Window.h" />
     <ClInclude Include="src\GameEngine\Events\AppEvent.h" />
     <ClInclude Include="src\GameEngine\Events\Event.h" />
     <ClInclude Include="src\GameEngine\Events\KeyEvent.h" />
     <ClInclude Include="src\GameEngine\Events\MouseEvent.h" />
     <ClInclude Include="src\GameEngine\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\GameEngine\Input.h" />
-    <ClInclude Include="src\GameEngine\KeyCodes.h" />
-    <ClInclude Include="src\GameEngine\Layer.h" />
-    <ClInclude Include="src\GameEngine\LayerStack.h" />
-    <ClInclude Include="src\GameEngine\Log.h" />
-    <ClInclude Include="src\GameEngine\MouseButtonCodes.h" />
-    <ClInclude Include="src\GameEngine\OrthographicCameraController.h" />
     <ClInclude Include="src\GameEngine\Renderer\Buffer.h" />
     <ClInclude Include="src\GameEngine\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\GameEngine\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\GameEngine\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\GameEngine\Renderer\RenderCommand.h" />
     <ClInclude Include="src\GameEngine\Renderer\Renderer.h" />
     <ClInclude Include="src\GameEngine\Renderer\RendererAPI.h" />
     <ClInclude Include="src\GameEngine\Renderer\Shader.h" />
     <ClInclude Include="src\GameEngine\Renderer\Texture.h" />
     <ClInclude Include="src\GameEngine\Renderer\VertexArray.h" />
-    <ClInclude Include="src\GameEngine\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -587,14 +587,14 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\GameEngine\App.cpp" />
+    <ClCompile Include="src\GameEngine\Core\App.cpp" />
+    <ClCompile Include="src\GameEngine\Core\Layer.cpp" />
+    <ClCompile Include="src\GameEngine\Core\LayerStack.cpp" />
+    <ClCompile Include="src\GameEngine\Core\Log.cpp" />
     <ClCompile Include="src\GameEngine\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\GameEngine\Layer.cpp" />
-    <ClCompile Include="src\GameEngine\LayerStack.cpp" />
-    <ClCompile Include="src\GameEngine\Log.cpp" />
-    <ClCompile Include="src\GameEngine\OrthographicCameraController.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\Buffer.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\GameEngine\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\RendererAPI.cpp" />

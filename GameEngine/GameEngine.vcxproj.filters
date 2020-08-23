@@ -57,17 +57,38 @@
     <ClInclude Include="src\GameEngine.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\App.h">
-      <Filter>src\GameEngine</Filter>
+    <ClInclude Include="src\GameEngine\Core\App.h">
+      <Filter>src\GameEngine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\Core.h">
-      <Filter>src\GameEngine</Filter>
+    <ClInclude Include="src\GameEngine\Core\Core.h">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Core\EntryPoint.h">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Core\Input.h">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Core\KeyCodes.h">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Core\Layer.h">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Core\LayerStack.h">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Core\Log.h">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Core\MouseButtonCodes.h">
+      <Filter>src\GameEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Core\Timestep.h">
       <Filter>src\GameEngine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\EntryPoint.h">
-      <Filter>src\GameEngine</Filter>
+    <ClInclude Include="src\GameEngine\Core\Window.h">
+      <Filter>src\GameEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Events\AppEvent.h">
       <Filter>src\GameEngine\Events</Filter>
@@ -84,24 +105,6 @@
     <ClInclude Include="src\GameEngine\ImGui\ImGuiLayer.h">
       <Filter>src\GameEngine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\Input.h">
-      <Filter>src\GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameEngine\KeyCodes.h">
-      <Filter>src\GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameEngine\Layer.h">
-      <Filter>src\GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameEngine\LayerStack.h">
-      <Filter>src\GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameEngine\Log.h">
-      <Filter>src\GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameEngine\MouseButtonCodes.h">
-      <Filter>src\GameEngine</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameEngine\Renderer\Buffer.h">
       <Filter>src\GameEngine\Renderer</Filter>
     </ClInclude>
@@ -109,6 +112,9 @@
       <Filter>src\GameEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Renderer\OrthographicCamera.h">
+      <Filter>src\GameEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\Renderer\OrthographicCameraController.h">
       <Filter>src\GameEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Renderer\RenderCommand.h">
@@ -128,9 +134,6 @@
     </ClInclude>
     <ClInclude Include="src\GameEngine\Renderer\VertexArray.h">
       <Filter>src\GameEngine\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameEngine\Window.h">
-      <Filter>src\GameEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1386,28 +1389,30 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\GameEngine\App.cpp">
-      <Filter>src\GameEngine</Filter>
+    <ClCompile Include="src\GameEngine\Core\App.cpp">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameEngine\Core\Layer.cpp">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameEngine\Core\LayerStack.cpp">
+      <Filter>src\GameEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameEngine\Core\Log.cpp">
+      <Filter>src\GameEngine\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\ImGui\ImGuiLayer.cpp">
       <Filter>src\GameEngine\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameEngine\Layer.cpp">
-      <Filter>src\GameEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameEngine\LayerStack.cpp">
-      <Filter>src\GameEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameEngine\Log.cpp">
-      <Filter>src\GameEngine</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\Renderer\Buffer.cpp">
       <Filter>src\GameEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\Renderer\OrthographicCamera.cpp">
+      <Filter>src\GameEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameEngine\Renderer\OrthographicCameraController.cpp">
       <Filter>src\GameEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\Renderer\RenderCommand.cpp">
@@ -1458,6 +1463,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEngine\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>

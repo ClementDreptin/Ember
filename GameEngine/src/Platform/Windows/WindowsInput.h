@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameEngine/Input.h"
+#include "GameEngine/Core/Input.h"
 
 namespace GameEngine {
 	class WindowsInput : public Input {
