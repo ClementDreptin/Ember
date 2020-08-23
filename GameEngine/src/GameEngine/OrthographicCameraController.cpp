@@ -57,7 +57,7 @@ namespace GameEngine {
 	}
 
 	bool OrthographicCameraController::onWindowResized(WindowResizeEvent& e) {
-		m_AspectRatio -= (float)e.getWidth() / e.getHeight();
+		m_AspectRatio = (float)e.getWidth() / e.getHeight();
 		m_Camera.setProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;
 	}
