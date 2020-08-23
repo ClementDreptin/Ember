@@ -30,6 +30,7 @@ namespace GameEngine {
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
+		bool m_Minimized = false;
 		LayerStack m_LayerStack;
 
 		static App* s_Instance;
@@ -37,6 +38,7 @@ namespace GameEngine {
 		float m_LastFrameTime = 0.0f;
 
 		bool onWindowClose(WindowCloseEvent& e);
+		bool onWindowResize(WindowResizeEvent& e);
 	};
 
 	// To be defined in a Client

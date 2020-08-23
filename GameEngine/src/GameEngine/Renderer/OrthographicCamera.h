@@ -10,7 +10,7 @@ namespace GameEngine {
 		void setProjection(float left, float right, float bottom, float top);
 
 		const glm::vec3& getPosition() { return m_Position; }
-		void setPosition(const glm::vec3 position) { m_Position = position; recalculateViewMatrix(); }
+		void setPosition(const glm::vec3& position) { m_Position = position; recalculateViewMatrix(); }
 
 		float getRotation() const { return m_Rotation; }
 		void setRotation(const float rotation) { m_Rotation = rotation; recalculateViewMatrix(); }

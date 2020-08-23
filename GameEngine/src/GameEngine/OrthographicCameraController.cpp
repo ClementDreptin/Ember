@@ -8,9 +8,7 @@ namespace GameEngine {
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation) 
 		: m_AspectRatio(aspectRatio),
 		  m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio* m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel),
-		  m_Rotation(rotation) {
-		
-	}
+		  m_Rotation(rotation) {}
 
 	void OrthographicCameraController::onUpdate(Timestep timestep) {
 		if (Input::isKeyPressed(GE_KEY_A)) {
@@ -21,18 +19,18 @@ namespace GameEngine {
 		}
 
 		if (Input::isKeyPressed(GE_KEY_W)) {
-			m_CameraPosition.y -= m_CameraTranslationSpeed * timestep;
+			m_CameraPosition.y += m_CameraTranslationSpeed * timestep;
 		}
 		else if (Input::isKeyPressed(GE_KEY_S)) {
-			m_CameraPosition.y += m_CameraTranslationSpeed * timestep;
+			m_CameraPosition.y -= m_CameraTranslationSpeed * timestep;
 		}
 
 		if (m_Rotation) {
 			if (Input::isKeyPressed(GE_KEY_Q)) {
-				m_CameraRotation -= m_CameraRotationSpeed * timestep;
+				m_CameraRotation += m_CameraRotationSpeed * timestep;
 			}
 			else if (Input::isKeyPressed(GE_KEY_E)) {
-				m_CameraRotation += m_CameraRotationSpeed * timestep;
+				m_CameraRotation -= m_CameraRotationSpeed * timestep;
 			}
 
 			m_Camera.setRotation(m_CameraRotation);
@@ -47,6 +45,12 @@ namespace GameEngine {
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<MouseScrolledEvent>(GE_BIND_EVENT_FN(OrthographicCameraController::onMouseScrolled));
 		dispatcher.dispatch<WindowResizeEvent>(GE_BIND_EVENT_FN(OrthographicCameraController::onWindowResized));
+	}
+
+	void OrthographicCameraController::onResize(float width, float height)
+	{
+		m_AspectRatio = width / height;
+		m_Camera.setProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 	}
 
 	bool OrthographicCameraController::onMouseScrolled(MouseScrolledEvent& e) {

@@ -12,6 +12,10 @@ namespace GameEngine {
 		inline static void setClearColor(const glm::vec4& color) {
 			s_RendererAPI->setClearColor(color);
 		}
+
+		inline static void setViewport(uint32_t originX, uint32_t originY, uint32_t width, uint32_t height) {
+			s_RendererAPI->setViewport(originX, originY, width, height);
+		}
 		
 		inline static void clear() {
 			s_RendererAPI->clear();
