@@ -15,9 +15,9 @@ namespace GameEngine {
 		float getRotation() const { return m_Rotation; }
 		void setRotation(const float rotation) { m_Rotation = rotation; recalculateViewMatrix(); }
 
-		const glm::mat4& getProjectionMatrix() { return m_ProjectionMatrix; }
-		const glm::mat4& getViewMatrix() { return m_ViewMatrix; }
-		const glm::mat4& getViewProjectionMatrix() { return m_ViewProjectionMatrix; }
+		const glm::mat4& getProjectionMatrix() const { return m_ProjectionMatrix; }
+		const glm::mat4& getViewMatrix() const { return m_ViewMatrix; }
+		const glm::mat4& getViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
 	private:
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
