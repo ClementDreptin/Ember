@@ -9,30 +9,7 @@ Sandbox2D::Sandbox2D() : Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f
 }
 
 void Sandbox2D::onAttach() {
-	// Square - START
-	m_SquareVertexArray = GameEngine::VertexArray::create();
-	float squareVertices[5 * 4] = {
-		-0.5f, -0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		-0.5f,  0.5f, 0.0f
-	};
-
-	GameEngine::Ref<GameEngine::VertexBuffer> squareVertexBuffer;
-	squareVertexBuffer = GameEngine::VertexBuffer::create(squareVertices, sizeof(squareVertices));
-	GameEngine::BufferLayout squareLayout = {
-		{ GameEngine::ShaderDataType::Float3, "a_Position" }	
-	};
-	squareVertexBuffer->setLayout(squareLayout);
-	m_SquareVertexArray->addVertexBuffer(squareVertexBuffer);
-
-	uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-	GameEngine::Ref<GameEngine::IndexBuffer> squareIndexBuffer;
-	squareIndexBuffer = GameEngine::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-	m_SquareVertexArray->setIndexBuffer(squareIndexBuffer);
-
-	m_FlatColorShader = GameEngine::Shader::create("assets/shaders/FlatColor.glsl");
-	// Square - END
+	
 }
 
 void Sandbox2D::onDetach() {}
@@ -43,14 +20,13 @@ void Sandbox2D::onUpdate(GameEngine::Timestep timestep) {
 	GameEngine::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 	GameEngine::RenderCommand::clear();
 
-	GameEngine::Renderer::beginScene(m_CameraController.getCamera());
+	GameEngine::Renderer2D::beginScene(m_CameraController.getCamera());
 
-	std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_FlatColorShader)->bind();
-	std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_SquareColor);
+	GameEngine::Renderer2D::drawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, { 0.8f, 0.2f, 0.3f, 1.0f });
+	GameEngine::Renderer2D::endScene();
 
-	GameEngine::Renderer::submit(m_FlatColorShader, m_SquareVertexArray, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
-	GameEngine::Renderer::endScene();
+	// std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_FlatColorShader)->bind();
+	// std::dynamic_pointer_cast<GameEngine::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_SquareColor);
 }
 
 void Sandbox2D::onImGuiRender() {

@@ -1,5 +1,6 @@
 #include "gepch.h"
 #include "Renderer.h"
+#include "Renderer2D.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
@@ -8,6 +9,7 @@ namespace GameEngine {
 
 	void Renderer::init() {
 		RenderCommand::init();
+		Renderer2D::init();
 	}
 
 	void Renderer::onWindowResize(uint32_t width, uint32_t height) {

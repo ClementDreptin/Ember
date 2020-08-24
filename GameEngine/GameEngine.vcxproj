@@ -163,6 +163,7 @@
     <ClInclude Include="src\GameEngine\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\GameEngine\Renderer\RenderCommand.h" />
     <ClInclude Include="src\GameEngine\Renderer\Renderer.h" />
+    <ClInclude Include="src\GameEngine\Renderer\Renderer2D.h" />
     <ClInclude Include="src\GameEngine\Renderer\RendererAPI.h" />
     <ClInclude Include="src\GameEngine\Renderer\Shader.h" />
     <ClInclude Include="src\GameEngine\Renderer\Texture.h" />
@@ -597,6 +598,7 @@
     <ClCompile Include="src\GameEngine\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\GameEngine\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\Shader.cpp" />
     <ClCompile Include="src\GameEngine\Renderer\Texture.cpp" />
