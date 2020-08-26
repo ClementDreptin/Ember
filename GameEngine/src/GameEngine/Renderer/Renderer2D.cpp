@@ -4,7 +4,8 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "RenderCommand.h"
-#include "Platform/OpenGL/OpenGLShader.h"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace GameEngine {
 	struct Renderer2DStorage {
@@ -41,14 +42,13 @@ namespace GameEngine {
 		s_Data->FlatColorShader = Shader::create("assets/shaders/FlatColor.glsl");
 	}
 
-	void Renderer2D::Shutdown() {
+	void Renderer2D::shutdown() {
 		delete s_Data;
 	}
 
 	void Renderer2D::beginScene(const OrthographicCamera& camera) {
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->FlatColorShader)->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->FlatColorShader)->uploadUniformMat4("u_ViewProjection", camera.getViewProjectionMatrix());
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->FlatColorShader)->uploadUniformMat4("u_Transform", glm::mat4(1.0f));
+		s_Data->FlatColorShader->bind();
+		s_Data->FlatColorShader->setMat4("u_ViewProjection", camera.getViewProjectionMatrix());
 	}
 
 	void Renderer2D::endScene() {
@@ -60,8 +60,31 @@ namespace GameEngine {
 	}
 
 	void Renderer2D::drawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->FlatColorShader)->bind();
-		std::dynamic_pointer_cast<GameEngine::OpenGLShader>(s_Data->FlatColorShader)->uploadUniformFloat4("u_Color", color);
+		s_Data->FlatColorShader->bind();
+		s_Data->FlatColorShader->setFloat4("u_Color", color);
+
+		glm::mat4 transform = 
+			glm::translate(glm::mat4(1.0f), position) *
+			glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+		s_Data->FlatColorShader->setMat4("u_Transform", transform);
+
+		s_Data->QuadVertexArray->bind();
+		RenderCommand::drawIndexed(s_Data->QuadVertexArray);
+	}
+
+	void Renderer2D::drawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
+		drawQuad({ position.x, position.y, 0.0f }, rotation, size, color);
+	}
+
+	void Renderer2D::drawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
+		s_Data->FlatColorShader->bind();
+		s_Data->FlatColorShader->setFloat4("u_Color", color);
+
+		glm::mat4 transform =
+			glm::translate(glm::mat4(1.0f), position) *
+			glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0, 0, 1)) *
+			glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		s_Data->FlatColorShader->setMat4("u_Transform", transform);
 
 		s_Data->QuadVertexArray->bind();
 		RenderCommand::drawIndexed(s_Data->QuadVertexArray);
