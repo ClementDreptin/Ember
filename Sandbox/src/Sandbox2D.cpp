@@ -1,4 +1,4 @@
-#include <GameEngine.h>
+#include <Ember.h>
 #include "Sandbox2D.h"
 
 #include "imgui/imgui.h"
@@ -9,30 +9,30 @@ Sandbox2D::Sandbox2D() : Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f
 
 }
 
-void Sandbox2D::onAttach() {
+void Sandbox2D::OnAttach() {
 	
 }
 
-void Sandbox2D::onDetach() {}
+void Sandbox2D::OnDetach() {}
 
-void Sandbox2D::onUpdate(GameEngine::Timestep timestep) {
-	m_CameraController.onUpdate(timestep);
+void Sandbox2D::OnUpdate(Ember::Timestep timestep) {
+	m_CameraController.OnUpdate(timestep);
 
-	GameEngine::RenderCommand::setClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-	GameEngine::RenderCommand::clear();
+	Ember::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+	Ember::RenderCommand::Clear();
 
-	GameEngine::Renderer2D::beginScene(m_CameraController.getCamera());
-	GameEngine::Renderer2D::drawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-	GameEngine::Renderer2D::drawQuad({ 0.5f, -0.5f }, 45, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-	GameEngine::Renderer2D::endScene();
+	Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	Ember::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
+	Ember::Renderer2D::DrawQuad({ 0.5f, -0.5f }, 45, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+	Ember::Renderer2D::EndScene();
 }
 
-void Sandbox2D::onImGuiRender() {
+void Sandbox2D::OnImGuiRender() {
 	ImGui::Begin("Settings");
 	ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 	ImGui::End();
 }
 
-void Sandbox2D::onEvent(GameEngine::Event& event) {
-	m_CameraController.onEvent(event);
+void Sandbox2D::OnEvent(Ember::Event& event) {
+	m_CameraController.OnEvent(event);
 }

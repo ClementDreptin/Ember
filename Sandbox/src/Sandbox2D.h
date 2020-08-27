@@ -1,23 +1,23 @@
 #pragma once
-#include <GameEngine.h>
+#include <Ember.h>
 
-class Sandbox2D : public GameEngine::Layer {
+class Sandbox2D : public Ember::Layer {
 public:
 	Sandbox2D();
 	virtual ~Sandbox2D() = default;
 
-	virtual void onAttach() override;
-	virtual void onDetach() override;
+	virtual void OnAttach() override;
+	virtual void OnDetach() override;
 
-	void onUpdate(GameEngine::Timestep timestep) override;
-	virtual void onImGuiRender() override;
-	void onEvent(GameEngine::Event& event) override;
+	void OnUpdate(Ember::Timestep timestep) override;
+	virtual void OnImGuiRender() override;
+	void OnEvent(Ember::Event& event) override;
 private:
-	GameEngine::OrthographicCameraController m_CameraController;
+	Ember::OrthographicCameraController m_CameraController;
 
 	// Temp
-	GameEngine::Ref<GameEngine::Shader> m_FlatColorShader;
-	GameEngine::Ref<GameEngine::VertexArray> m_SquareVertexArray;
+	Ember::Ref<Ember::Shader> m_FlatColorShader;
+	Ember::Ref<Ember::VertexArray> m_SquareVertexArray;
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };

@@ -1,4 +1,4 @@
-workspace "GameEngine"
+workspace "Ember"
 	architecture "x64"
 
 	configurations {"Debug", "Release", "Dist"}
@@ -7,18 +7,18 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
-IncludeDir["GLFW"] = "GameEngine/vendor/GLFW/include"
-IncludeDir["glad"] = "GameEngine/vendor/glad/include"
-IncludeDir["imgui"] = "GameEngine/vendor/imgui"
-IncludeDir["glm"] = "GameEngine/vendor/glm"
-IncludeDir["stb_image"] = "GameEngine/vendor/stb_image"
+IncludeDir["GLFW"] = "Ember/vendor/GLFW/include"
+IncludeDir["glad"] = "Ember/vendor/glad/include"
+IncludeDir["imgui"] = "Ember/vendor/imgui"
+IncludeDir["glm"] = "Ember/vendor/glm"
+IncludeDir["stb_image"] = "Ember/vendor/stb_image"
 
-include "GameEngine/vendor/GLFW"
-include "GameEngine/vendor/glad"
-include "GameEngine/vendor/imgui"
+include "Ember/vendor/GLFW"
+include "Ember/vendor/glad"
+include "Ember/vendor/imgui"
 
-project "GameEngine"
-	location "GameEngine"
+project "Ember"
+	location "Ember"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
@@ -27,8 +27,8 @@ project "GameEngine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-	pchheader "gepch.h"
-	pchsource "GameEngine/src/gepch.cpp"
+	pchheader "ebpch.h"
+	pchsource "Ember/src/ebpch.cpp"
 
 	files {
 		"%{prj.name}/src/**.h",
@@ -63,20 +63,20 @@ project "GameEngine"
 	filter "system:windows"
 		systemversion "latest"
 
-		defines {"GE_PLATFORM_WINDOWS", "GE_BUILD_DLL", "GLFW_INCLUDE_NONE"}
+		defines {"EB_PLATFORM_WINDOWS", "EB_BUILD_DLL", "GLFW_INCLUDE_NONE"}
 
 	filter "configurations:Debug"
-		defines "GE_DEBUG"
+		defines "EB_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "GE_RELEASE"
+		defines "EB_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
-		defines "GE_DIST"
+		defines "EB_DIST"
 		runtime "Release"
 		optimize "on"
 
@@ -94,31 +94,31 @@ project "Sandbox"
 	files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
 
 	includedirs {
-		"GameEngine/vendor/spdlog/include",
-		"GameEngine/src",
-		"GameEngine/vendor",
+		"Ember/vendor/spdlog/include",
+		"Ember/src",
+		"Ember/vendor",
 		"%{IncludeDir.glm}"
 	}
 
-	links {"GameEngine"}
+	links {"Ember"}
 
 	filter "system:windows"
 		staticruntime "On"
 		systemversion "latest"
 
-		defines {"GE_PLATFORM_WINDOWS"}
+		defines {"EB_PLATFORM_WINDOWS"}
 
 	filter "configurations:Debug"
-		defines "GE_DEBUG"
+		defines "EB_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "GE_RELEASE"
+		defines "EB_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
-		defines "GE_DIST"
+		defines "EB_DIST"
 		runtime "Release"
 		optimize "on"
