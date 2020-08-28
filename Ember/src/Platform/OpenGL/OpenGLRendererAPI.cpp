@@ -25,5 +25,6 @@ namespace Ember {
 
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray) {
 		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		glBindTexture(GL_TEXTURE_2D, 0); // Little hack that unbinds the texture every time so that not everything has the same texture
 	}
 }
