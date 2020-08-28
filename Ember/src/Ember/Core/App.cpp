@@ -16,7 +16,7 @@ namespace Ember {
 		EB_CORE_ASSERT(!s_Instance, "App already exists!");
 		s_Instance = this;
 
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = Scope<Window>(Window::Create());
 		m_Window->SetEventCallback(EB_BIND_EVENT_FN(App::OnEvent));
 
 		Renderer::Init();
