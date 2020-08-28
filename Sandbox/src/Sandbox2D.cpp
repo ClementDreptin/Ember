@@ -10,7 +10,7 @@ Sandbox2D::Sandbox2D() : Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f
 }
 
 void Sandbox2D::OnAttach() {
-	
+	m_CheckerboardTexture = Ember::Texture2D::Create("assets/textures/checkerboard.png");
 }
 
 void Sandbox2D::OnDetach() {}
@@ -24,6 +24,7 @@ void Sandbox2D::OnUpdate(Ember::Timestep timestep) {
 	Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
 	Ember::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
 	Ember::Renderer2D::DrawQuad({ 0.5f, -0.5f }, 45, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+	Ember::Renderer2D::DrawQuad({ 0.2f, 0.5f, -0.1 }, -45, { 10.0f, 10.0f }, m_CheckerboardTexture);
 	Ember::Renderer2D::EndScene();
 }
 
