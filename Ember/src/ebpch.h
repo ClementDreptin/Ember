@@ -14,6 +14,7 @@
 #include <unordered_set>
 
 #include "Ember/Core/Log.h"
+#include "Ember/Debug/Instrumentor.h"
 
 #ifdef EB_PLATFORM_WINDOWS
 	#include <Windows.h>
