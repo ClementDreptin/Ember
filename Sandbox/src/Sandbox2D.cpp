@@ -9,20 +9,19 @@ Sandbox2D::Sandbox2D() : Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f
 }
 
 void Sandbox2D::OnAttach() {
+	EB_PROFILE_FUNCTION();
+
 	m_CheckerboardTexture = Ember::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach() {
-
+	EB_PROFILE_FUNCTION();
 }
 
 void Sandbox2D::OnUpdate(Ember::Timestep ts) {
-	EB_PROFILE_FUNCTION();
+	EB_PROFILE_SCOPE("CameraController::OnUpdate");
 
-	{
-		EB_PROFILE_SCOPE("CameraController::OnUpdate");
-		m_CameraController.OnUpdate(ts);
-	}
+	m_CameraController.OnUpdate(ts);
 
 	{
 		EB_PROFILE_SCOPE("Renderer Prep");

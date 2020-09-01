@@ -17,6 +17,8 @@ namespace Ember {
 	static Renderer2DStorage* s_Data;
 
 	void Renderer2D::Init() {
+		EB_PROFILE_FUNCTION();
+
 		s_Data = new Renderer2DStorage();
 		s_Data->QuadVertexArray = VertexArray::Create();
 
@@ -51,16 +53,20 @@ namespace Ember {
 	}
 
 	void Renderer2D::Shutdown() {
+		EB_PROFILE_FUNCTION();
+
 		delete s_Data;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera) {
+		EB_PROFILE_FUNCTION();
+
 		s_Data->TextureShader->Bind();
 		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
 
 	void Renderer2D::EndScene() {
-
+		EB_PROFILE_FUNCTION();
 	}
 
 	// Vec2 for position - no rotation - color
@@ -70,6 +76,8 @@ namespace Ember {
 
 	// Vec3 for position - no rotation - color
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
+		EB_PROFILE_FUNCTION();
+
 		s_Data->TextureShader->SetFloat4("u_Color", color);
 		s_Data->WhiteTexture->Bind();
 
@@ -89,6 +97,8 @@ namespace Ember {
 
 	// Vec3 for position - rotation - color
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
+		EB_PROFILE_FUNCTION();
+
 		s_Data->TextureShader->SetFloat4("u_Color", color);
 		s_Data->WhiteTexture->Bind();
 
@@ -109,6 +119,8 @@ namespace Ember {
 
 	// Vec3 for position - rotation - texture
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture) {
+		EB_PROFILE_FUNCTION();
+
 		s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 		texture->Bind();
 
@@ -128,6 +140,8 @@ namespace Ember {
 
 	// Vec3 for position - rotation - texture
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture) {
+		EB_PROFILE_FUNCTION();
+
 		s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 		texture->Bind();
 

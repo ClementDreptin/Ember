@@ -13,6 +13,8 @@ namespace Ember {
 	App* App::s_Instance = nullptr;
 
 	App::App() {
+		EB_PROFILE_FUNCTION();
+
 		EB_CORE_ASSERT(!s_Instance, "App already exists!");
 		s_Instance = this;
 
@@ -26,20 +28,26 @@ namespace Ember {
 	}
 
 	App::~App() {
-
+		EB_PROFILE_FUNCTION();
 	}
 
 	void App::PushLayer(Layer* layer) {
+		EB_PROFILE_FUNCTION();
+
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
 
 	void App::PushOverlay(Layer* layer) {
+		EB_PROFILE_FUNCTION();
+
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
 
 	void App::OnEvent(Event& e) {
+		EB_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(EB_BIND_EVENT_FN(App::OnWindowClose));
 		dispatcher.dispatch<WindowResizeEvent>(EB_BIND_EVENT_FN(App::OnWindowResize));
@@ -52,22 +60,32 @@ namespace Ember {
 	}
 
 	void App::Run() {
+		EB_PROFILE_FUNCTION();
+
 		while (m_Running) {
+			EB_PROFILE_SCOPE("RunLoop");
+
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
 			if (!m_Minimized) {
-				for (Layer* layer : m_LayerStack) {
-					layer->OnUpdate(timestep);
+				{
+					EB_PROFILE_SCOPE("LayerStack OnUpdate");
+					for (Layer* layer : m_LayerStack) {
+						layer->OnUpdate(timestep);
+					}
 				}
-			}
 
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack) {
-				layer->OnImGuiRender();
+				m_ImGuiLayer->Begin();
+				{
+					EB_PROFILE_SCOPE("LayerStack OnImGuiRender");
+					for (Layer* layer : m_LayerStack) {
+						layer->OnImGuiRender();
+					}
+				}
+				m_ImGuiLayer->End();
 			}
-			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}
@@ -79,6 +97,8 @@ namespace Ember {
 	}
 
 	bool App::OnWindowResize(WindowResizeEvent& e) {
+		EB_PROFILE_FUNCTION();
+
 		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
 			m_Minimized = true;
 			return false;

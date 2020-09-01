@@ -14,6 +14,8 @@ namespace Ember {
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& path) {
+		EB_PROFILE_FUNCTION();
+
 		std::string shaderSource = ReadFile(path);
 		auto shaderSources = PreProcess(shaderSource);
 		Compile(shaderSources);
@@ -27,6 +29,8 @@ namespace Ember {
 
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
 		: m_Name(name) {
+		EB_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 		shaderSources[GL_VERTEX_SHADER] = vertexSrc;
 		shaderSources[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -34,10 +38,14 @@ namespace Ember {
 	}
 
 	OpenGLShader::~OpenGLShader() {
+		EB_PROFILE_FUNCTION();
+
 		glDeleteProgram(m_RendererID);
 	}
 
 	std::string OpenGLShader::ReadFile(const std::string& path) {
+		EB_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream in(path, std::ios::in | std::ios::binary);
 
@@ -56,6 +64,8 @@ namespace Ember {
 	}
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& shaderSource) {
+		EB_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -82,6 +92,8 @@ namespace Ember {
 	}
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources) {
+		EB_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
 		EB_CORE_ASSERT(shaderSources.size() <= 2, "Too many shaders!");
 		std::array<GLenum, 2> glShaderIDs;
@@ -155,26 +167,38 @@ namespace Ember {
 	}
 
 	void OpenGLShader::Bind() const {
+		EB_PROFILE_FUNCTION();
+
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const {
+		EB_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 
 	void OpenGLShader::SetInt(const std::string& name, int value) {
+		EB_PROFILE_FUNCTION();
+
 		UploadUniformInt(name, value);
 	}
 
 	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value) {
+		EB_PROFILE_FUNCTION();
+
 		UploadUniformFloat3(name, value);
 	}
 
 	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value) {
+		EB_PROFILE_FUNCTION();
+
 		UploadUniformFloat4(name, value);
 	}
 
 	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value) {
+		EB_PROFILE_FUNCTION();
+
 		UploadUniformMat4(name, value);
 	}
 
