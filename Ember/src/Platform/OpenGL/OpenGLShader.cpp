@@ -184,6 +184,12 @@ namespace Ember {
 		UploadUniformInt(name, value);
 	}
 
+	void OpenGLShader::SetFloat(const std::string& name, float value) {
+		EB_PROFILE_FUNCTION();
+
+		UploadUniformFloat(name, value);
+	}
+
 	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value) {
 		EB_PROFILE_FUNCTION();
 
