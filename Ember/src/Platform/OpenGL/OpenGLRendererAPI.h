@@ -11,6 +11,6 @@ namespace Ember {
 		virtual void SetViewport(uint32_t originX, uint32_t originY, uint32_t width, uint32_t height) override;
 		virtual void Clear() override;
 
-		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) override;
+		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) override;
 	};
 }
