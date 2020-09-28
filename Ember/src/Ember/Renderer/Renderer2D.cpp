@@ -19,9 +19,9 @@ namespace Ember {
 
 
 	struct Renderer2DData {
-		const uint32_t MaxQuads = 10000;
-		const uint32_t MaxVertices = MaxQuads * 4;
-		const uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxQuads = 10000;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices = MaxQuads * 6;
 		static const uint32_t MaxTextureSlots = 32;
 
 		Ref<VertexArray> QuadVertexArray;
@@ -37,6 +37,8 @@ namespace Ember {
 		uint32_t TextureSlotIndex = 1; // 0 is already is used for the white texture
 
 		glm::vec4 QuadVertexPositions[4];
+
+		Renderer2D::Statistics Stats;
 	};
 
 	static Renderer2DData s_Data;
@@ -130,6 +132,17 @@ namespace Ember {
 		}
 
 		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
+
+		s_Data.Stats.DrawCalls++;
+	}
+
+	void Renderer2D::FlushAndReset() {
+		EndScene();
+
+		s_Data.QuadIndexCount = 0;
+		s_Data.QuadVertexBufferPointer = s_Data.QuadVertexBufferBase;
+
+		s_Data.TextureSlotIndex = 1;
 	}
 
 	// Vec2 for position - no rotation - color
@@ -141,6 +154,10 @@ namespace Ember {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
 		EB_PROFILE_FUNCTION();
 
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
+
 		const float textureIndex = 0.0f; // Texture index is always 0 when it's just a plain color
 		const float tilingFactor = 1.0f;
 
@@ -148,8 +165,6 @@ namespace Ember {
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
-
-		s_Data.QuadIndexCount += 6;
 	}
 
 	// Vec2 for position - rotation - color
@@ -161,6 +176,10 @@ namespace Ember {
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
 		EB_PROFILE_FUNCTION();
 
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
+
 		const float textureIndex = 0.0f; // Texture index is always 0 when it's just a plain color
 		const float tilingFactor = 1.0f;
 
@@ -169,8 +188,6 @@ namespace Ember {
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
-
-		s_Data.QuadIndexCount += 6;
 	}
 
 	// Vec2 for position - no rotation - texture - tiling factor - tint color
@@ -182,6 +199,10 @@ namespace Ember {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
 		EB_PROFILE_FUNCTION();
 
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
+
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
@@ -203,8 +224,6 @@ namespace Ember {
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
-
-		s_Data.QuadIndexCount += 6;
 	}
 
 	// Vec2 for position - rotation - texture - tiling factor - tint color
@@ -215,6 +234,10 @@ namespace Ember {
 	// Vec3 for position - rotation - texture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
 		EB_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
 
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
@@ -238,8 +261,6 @@ namespace Ember {
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
-
-		s_Data.QuadIndexCount += 6;
 	}
 
 	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
@@ -268,5 +289,17 @@ namespace Ember {
 			s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
 			s_Data.QuadVertexBufferPointer++;
 		}
+
+		s_Data.QuadIndexCount += 6;
+		
+		s_Data.Stats.QuadCount++;
+	}
+
+	void Renderer2D::ResetStats() {
+		memset(&s_Data.Stats, 0, sizeof(Statistics));
+	}
+
+	Renderer2D::Statistics Renderer2D::GetStats() {
+		return s_Data.Stats;
 	}
 }
