@@ -147,33 +147,7 @@ namespace Ember {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[0];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[1];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[2];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[3];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
+		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
 
 		s_Data.QuadIndexCount += 6;
 	}
@@ -194,33 +168,7 @@ namespace Ember {
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[0];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[1];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[2];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[3];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
+		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
 
 		s_Data.QuadIndexCount += 6;
 	}
@@ -234,7 +182,7 @@ namespace Ember {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
 		EB_PROFILE_FUNCTION();
 
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f,1.0f };
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
 
@@ -254,33 +202,7 @@ namespace Ember {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[0];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[1];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[2];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[3];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
+		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
 
 		s_Data.QuadIndexCount += 6;
 	}
@@ -294,7 +216,7 @@ namespace Ember {
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
 		EB_PROFILE_FUNCTION();
 
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f,1.0f };
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
 
@@ -315,34 +237,36 @@ namespace Ember {
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[0];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[1];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 0.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[2];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 1.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
-
-		s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[3];
-		s_Data.QuadVertexBufferPointer->Color = color;
-		s_Data.QuadVertexBufferPointer->TextCoord = { 0.0f, 1.0f };
-		s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
-		s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
-		s_Data.QuadVertexBufferPointer++;
+		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
 
 		s_Data.QuadIndexCount += 6;
+	}
+
+	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
+		for (int i = 0; i < 4; i++) {
+			s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPointer->Color = color;
+
+			glm::vec2 textCoord;
+			switch (i) {
+				case 0:
+					textCoord = { 0.0f, 0.0f };
+					break;
+				case 1:
+					textCoord = { 1.0f, 0.0f };
+					break;
+				case 2:
+					textCoord = { 1.0f, 1.0f };
+					break;
+				case 3:
+					textCoord = { 0.0f, 1.0f };
+					break;
+			}
+
+			s_Data.QuadVertexBufferPointer->TextCoord = textCoord;
+			s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
+			s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
+			s_Data.QuadVertexBufferPointer++;
+		}
 	}
 }
