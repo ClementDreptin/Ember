@@ -37,6 +37,6 @@ namespace Ember {
 		double xPos, yPos;
 		glfwGetCursorPos(window, &xPos, &yPos);
 
-		return { (float)xPos, (float)xPos };
+		return { (float)xPos, (float)yPos };
 	}
 }
