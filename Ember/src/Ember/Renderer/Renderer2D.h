@@ -19,22 +19,22 @@ namespace Ember {
 		// Vec3 for position - no rotation - color
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
 
-		// Vec2 for position - rotation - color
+		// Vec2 for position - rotation (radians) - color
 		static void DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color);
 
-		// Vec3 for position - rotation - color
+		// Vec3 for position - rotation (radians) - color
 		static void DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color);
 
 		// Vec2 for position - no rotation - texture - tiling factor - tint color
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
-		// Vec3 for position - rotation - texture - tiling factor - tint color
+		// Vec3 for position - rotation (radians) - texture - tiling factor - tint color
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
-		// Vec2 for position - rotation - texture - tiling factor - tint color
+		// Vec2 for position - rotation (radians) - texture - tiling factor - tint color
 		static void DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
-		// Vec3 for position - rotation - texture - tiling factor - tint color
+		// Vec3 for position - rotation (radians) - texture - tiling factor - tint color
 		static void DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
 		// Stats

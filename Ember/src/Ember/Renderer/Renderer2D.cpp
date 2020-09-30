@@ -167,12 +167,12 @@ namespace Ember {
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
 	}
 
-	// Vec2 for position - rotation - color
+	// Vec2 for position - rotation (radians) - color
 	void Renderer2D::DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
 		DrawQuad({ position.x, position.y, 0.0f }, rotation, size, color);
 	}
 
-	// Vec3 for position - rotation - color
+	// Vec3 for position - rotation (radians) - color
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
 		EB_PROFILE_FUNCTION();
 
@@ -184,7 +184,7 @@ namespace Ember {
 		const float tilingFactor = 1.0f;
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
@@ -226,12 +226,12 @@ namespace Ember {
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
 	}
 
-	// Vec2 for position - rotation - texture - tiling factor - tint color
+	// Vec2 for position - rotation (radians) - texture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
 		DrawQuad({ position.x, position.y, 0.0f }, rotation, size, texture, tilingFactor, tintColor);
 	}
 
-	// Vec3 for position - rotation - texture - tiling factor - tint color
+	// Vec3 for position - rotation (radians) - texture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
 		EB_PROFILE_FUNCTION();
 
@@ -257,7 +257,7 @@ namespace Ember {
 		}
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
