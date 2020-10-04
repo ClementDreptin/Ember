@@ -264,27 +264,17 @@ namespace Ember {
 	}
 
 	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
+		constexpr glm::vec2 textureCoords[] = {
+			{ 0.0f, 0.0f },
+			{ 1.0f, 0.0f },
+			{ 1.0f, 1.0f },
+			{ 0.0f, 1.0f }
+		};
+		
 		for (int i = 0; i < 4; i++) {
 			s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[i];
 			s_Data.QuadVertexBufferPointer->Color = color;
-
-			glm::vec2 textCoord;
-			switch (i) {
-				case 0:
-					textCoord = { 0.0f, 0.0f };
-					break;
-				case 1:
-					textCoord = { 1.0f, 0.0f };
-					break;
-				case 2:
-					textCoord = { 1.0f, 1.0f };
-					break;
-				case 3:
-					textCoord = { 0.0f, 1.0f };
-					break;
-			}
-
-			s_Data.QuadVertexBufferPointer->TextCoord = textCoord;
+			s_Data.QuadVertexBufferPointer->TextCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPointer->TextIndex = textureIndex;
 			s_Data.QuadVertexBufferPointer->TilingFactor = tilingFactor;
 			s_Data.QuadVertexBufferPointer++;
