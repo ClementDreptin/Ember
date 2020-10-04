@@ -29,7 +29,7 @@ namespace Ember {
 		const OrthographicCameraBounds& GetBounds() const { return m_Bounds; }
 			
 		float GetZoomLevel() { return m_ZoomLevel; }
-		void SetZoomLevel(float zoomLevel) { m_ZoomLevel = zoomLevel; }
+		void SetZoomLevel(float zoomLevel) { m_ZoomLevel = zoomLevel; CalculateView(); }
 	private:
 		float m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
@@ -43,5 +43,7 @@ namespace Ember {
 
 		bool OnMouseScrolled(MouseScrolledEvent& event);
 		bool OnWindowResized(WindowResizeEvent& event);
+
+		void CalculateView();
 	};
 }
