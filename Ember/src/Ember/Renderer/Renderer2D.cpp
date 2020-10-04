@@ -264,11 +264,16 @@ namespace Ember {
 	}
 
 	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
+		// SUPER TEMPORARY!!!
+		constexpr float x = 7.0f, y = 6.0f;
+		constexpr float sheetWidth = 2560.0f, sheetHeight = 1664.0f;
+		constexpr float spriteWidth = 128.0f, spriteHeight = 128.0f;
+
 		constexpr glm::vec2 textureCoords[] = {
-			{ 0.0f, 0.0f },
-			{ 1.0f, 0.0f },
-			{ 1.0f, 1.0f },
-			{ 0.0f, 1.0f }
+			{ (x * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
+			{ ((x + 1) * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
+			{ ((x + 1) * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight },
+			{ (x * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight }
 		};
 		
 		for (int i = 0; i < 4; i++) {
