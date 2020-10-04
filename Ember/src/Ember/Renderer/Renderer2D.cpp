@@ -203,8 +203,6 @@ namespace Ember {
 			FlushAndReset();
 		}
 
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
-
 		float textureIndex = 0.0f;
 
 		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++) {
@@ -223,7 +221,43 @@ namespace Ember {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
+		PopulateQuadVertexBuffer(transform, tintColor, textureIndex, tilingFactor);
+	}
+
+	// Vec2 for position - no rotation - subtexture - tiling factor - tint color
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float tilingFactor, const glm::vec4& tintColor) {
+		DrawQuad({ position.x, position.y, 0.0f }, size, subTexture, tilingFactor, tintColor);
+	}
+
+	// Vec3 for position - no rotation - subtexture - tiling factor - tint color
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float tilingFactor, const glm::vec4& tintColor) {
+		EB_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
+
+		const glm::vec2* textureCoords = subTexture->GetTextCoords();
+		const Ref<Texture2D> texture = subTexture->GetTexture();
+		float textureIndex = 0.0f;
+
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++) {
+			if (*s_Data.TextureSlots[i].get() == *texture.get()) {
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f) {
+			textureIndex = (float)s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			s_Data.TextureSlotIndex++;
+		}
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
+		PopulateQuadVertexBuffer(transform, tintColor, textureIndex, tilingFactor, textureCoords);
 	}
 
 	// Vec2 for position - rotation (radians) - texture - tiling factor - tint color
@@ -238,8 +272,6 @@ namespace Ember {
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
 			FlushAndReset();
 		}
-
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
 
@@ -260,22 +292,47 @@ namespace Ember {
 			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
+		PopulateQuadVertexBuffer(transform, tintColor, textureIndex, tilingFactor);
 	}
 
-	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
-		// SUPER TEMPORARY!!!
-		constexpr float x = 7.0f, y = 6.0f;
-		constexpr float sheetWidth = 2560.0f, sheetHeight = 1664.0f;
-		constexpr float spriteWidth = 128.0f, spriteHeight = 128.0f;
+	// Vec2 for position - rotation (radians) - subtexture - tiling factor - tint color
+	void Renderer2D::DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float tilingFactor, const glm::vec4& tintColor) {
+		DrawQuad({ position.x, position.y, 0.0f }, rotation, size, subTexture, tilingFactor, tintColor);
+	}
 
-		constexpr glm::vec2 textureCoords[] = {
-			{ (x * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
-			{ ((x + 1) * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
-			{ ((x + 1) * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight },
-			{ (x * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight }
-		};
-		
+	// Vec3 for position - rotation (radians) - subtexture - tiling factor - tint color
+	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float tilingFactor, const glm::vec4& tintColor) {
+		EB_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
+
+		const glm::vec2* textureCoords = subTexture->GetTextCoords();
+		const Ref<Texture2D> texture = subTexture->GetTexture();
+		float textureIndex = 0.0f;
+
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++) {
+			if (*s_Data.TextureSlots[i].get() == *texture.get()) {
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f) {
+			textureIndex = (float)s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			s_Data.TextureSlotIndex++;
+		}
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
+		PopulateQuadVertexBuffer(transform, tintColor, textureIndex, tilingFactor, textureCoords);
+	}
+
+	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor, const glm::vec2* textureCoords) {
 		for (int i = 0; i < 4; i++) {
 			s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[i];
 			s_Data.QuadVertexBufferPointer->Color = color;
@@ -286,8 +343,19 @@ namespace Ember {
 		}
 
 		s_Data.QuadIndexCount += 6;
-		
+
 		s_Data.Stats.QuadCount++;
+	}
+
+	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
+		constexpr glm::vec2 textureCoords[] = {
+			{ 0.0f, 0.0f },
+			{ 1.0f, 0.0f },
+			{ 1.0f, 1.0f },
+			{ 0.0f, 1.0f }
+		};
+
+		Renderer2D::PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor, textureCoords);
 	}
 
 	void Renderer2D::ResetStats() {
