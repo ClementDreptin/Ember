@@ -1394,6 +1394,8 @@
     </ClInclude>
     <ClInclude Include="src\Ember\Debug\Instrumentor.h" />
     <ClInclude Include="src\Ember\Renderer\SubTexture2D.h" />
+    <ClInclude Include="src\Ember\Renderer\FrameBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ember\Core\App.cpp">
@@ -1472,5 +1474,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Ember\Renderer\SubTexture2D.cpp" />
+    <ClCompile Include="src\Ember\Renderer\FrameBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>

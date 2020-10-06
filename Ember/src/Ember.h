@@ -21,6 +21,7 @@
 
 #include "Ember/Renderer/Buffer.h"
 #include "Ember/Renderer/Shader.h"
+#include "Ember/Renderer/FrameBuffer.h"
 #include "Ember/Renderer/Texture.h"
 #include "Ember/Renderer/SubTexture2D.h"
 #include "Ember/Renderer/VertexArray.h"

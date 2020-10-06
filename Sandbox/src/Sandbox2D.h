@@ -20,6 +20,7 @@ private:
 	// Temp
 	Ember::Ref<Ember::Shader> m_FlatColorShader;
 	Ember::Ref<Ember::VertexArray> m_SquareVertexArray;
+	Ember::Ref<Ember::FrameBuffer> m_FrameBuffer;
 
 	Ember::Ref<Ember::Texture2D> m_CheckerboardTexture;
 
