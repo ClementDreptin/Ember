@@ -26,6 +26,8 @@ namespace Ember {
 
 		inline static App& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
+
+		void Close();
 	private:
 		Scope<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;

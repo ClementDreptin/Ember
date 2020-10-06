@@ -45,6 +45,10 @@ namespace Ember {
 		layer->OnAttach();
 	}
 
+	void App::Close() {
+		m_Running = false;
+	}
+
 	void App::OnEvent(Event& e) {
 		EB_PROFILE_FUNCTION();
 
