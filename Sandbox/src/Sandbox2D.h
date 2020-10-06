@@ -22,14 +22,6 @@ private:
 	Ember::Ref<Ember::VertexArray> m_SquareVertexArray;
 
 	Ember::Ref<Ember::Texture2D> m_CheckerboardTexture;
-	Ember::Ref<Ember::Texture2D> m_SpriteSheet;
-	Ember::Ref<Ember::SubTexture2D> m_TextureStairs, m_TextureBarrel, m_TextureTree;
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
-
-	ParticleSystem m_ParticleSystem;
-	ParticleProps m_Particle;
-
-	uint32_t m_MapWidth, m_MapHeight;
-	std::unordered_map<char, Ember::Ref<Ember::SubTexture2D>> s_TextureMap;
 };
