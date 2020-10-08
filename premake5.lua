@@ -1,5 +1,6 @@
 workspace "Ember"
 	architecture "x64"
+	startproject "EmberEditor"
 
 	configurations {"Debug", "Release", "Dist"}
 
