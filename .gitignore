@@ -5,6 +5,6 @@ bin-int/
 
 # Files
 *.user
-Sandbox/EmberProfile-Runtime.json
-Sandbox/EmberProfile-Shutdown.json
-Sandbox/EmberProfile-Startup.json
+EmberProfile-Runtime.json
+EmberProfile-Shutdown.json
+EmberProfile-Startup.json
