@@ -80,9 +80,51 @@ project "Ember"
 		runtime "Release"
 		optimize "on"
 
-
 project "Sandbox"
 	location "Sandbox"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
+
+	includedirs {
+		"Ember/vendor/spdlog/include",
+		"Ember/src",
+		"Ember/vendor",
+		"%{IncludeDir.glm}"
+	}
+
+	links {"Ember"}
+
+	filter "system:windows"
+		staticruntime "On"
+		systemversion "latest"
+
+		defines {"EB_PLATFORM_WINDOWS"}
+
+	filter "configurations:Debug"
+		defines "EB_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "EB_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "EB_DIST"
+		runtime "Release"
+		optimize "on"
+
+
+project "EmberEditor"
+	location "EmberEditor"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
