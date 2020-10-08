@@ -12,13 +12,13 @@
 namespace Ember {
 	App* App::s_Instance = nullptr;
 
-	App::App() {
+	App::App(const std::string& name) {
 		EB_PROFILE_FUNCTION();
 
 		EB_CORE_ASSERT(!s_Instance, "App already exists!");
 		s_Instance = this;
 
-		m_Window = Scope<Window>(Window::Create());
+		m_Window = Scope<Window>(Window::Create(WindowProps(name)));
 		m_Window->SetEventCallback(EB_BIND_EVENT_FN(App::OnEvent));
 
 		Renderer::Init();

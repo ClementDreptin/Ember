@@ -14,7 +14,7 @@
 namespace Ember {
 	class App {
 	public:
-		App();
+		App(const std::string& name = "Ember App");
 		virtual ~App();
 
 		void Run();
