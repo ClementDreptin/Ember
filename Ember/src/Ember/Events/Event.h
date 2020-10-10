@@ -30,6 +30,8 @@ namespace Ember {
 	class Event {
 		friend class EventDispatcher;
 	public:
+		virtual ~Event() = default;
+
 		bool m_Handled = false;
 
 		virtual EventType GetEventType() const = 0;
