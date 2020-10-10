@@ -28,7 +28,9 @@ namespace Ember {
 	void EditorLayer::OnUpdate(Ember::Timestep ts) {
 		EB_PROFILE_SCOPE("CameraController::OnUpdate");
 
-		m_CameraController.OnUpdate(ts);
+		if (m_ViewportFocused) {
+			m_CameraController.OnUpdate(ts);
+		}
 
 		Ember::Renderer2D::ResetStats();
 
@@ -124,6 +126,11 @@ namespace Ember {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
+
+		m_ViewportFocused = ImGui::IsWindowFocused();
+		m_ViewportHovered = ImGui::IsWindowHovered();
+		App::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (m_ViewportSize != *((glm::vec2*) & viewportPanelSize)) {
 			m_FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
