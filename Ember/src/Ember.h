@@ -18,6 +18,7 @@
 #include "Ember/ImGui/ImGuiLayer.h"
 
 #include "Ember/Scene/Scene.h"
+#include "Ember/Scene/Entity.h"
 #include "Ember/Scene/Components.h"
 
 #include "Ember/Renderer/Renderer.h"

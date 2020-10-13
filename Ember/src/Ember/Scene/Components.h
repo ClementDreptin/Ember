@@ -3,6 +3,16 @@
 #include <glm/glm.hpp>
 
 namespace Ember {
+	struct TagComponent {
+		std::string Tag;
+
+		TagComponent() = default;
+		TagComponent(const TagComponent& other) = default;
+		TagComponent(const std::string& tag)
+			: Tag(tag) {}
+
+	};
+
 	struct TransformComponent {
 		glm::mat4 Transform{ 1.0f };
 

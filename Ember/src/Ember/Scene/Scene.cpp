@@ -5,6 +5,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Entity.h"
+
 namespace Ember {
 	Scene::Scene() {}
 
@@ -19,7 +21,13 @@ namespace Ember {
 		}
 	}
 
-	entt::entity Scene::CreateEntity() {
-		return m_Registry.create();
+	Entity Scene::CreateEntity(const std::string& name) {
+		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<TransformComponent>();
+
+		auto& tag = entity.AddComponent<TagComponent>();
+		tag.Tag = name.empty() ? "Entity" : name;
+
+		return entity;
 	}
 }
