@@ -13,6 +13,7 @@ IncludeDir["glad"] = "Ember/vendor/glad/include"
 IncludeDir["imgui"] = "Ember/vendor/imgui"
 IncludeDir["glm"] = "Ember/vendor/glm"
 IncludeDir["stb_image"] = "Ember/vendor/stb_image"
+IncludeDir["entt"] = "Ember/vendor/entt/include"
 
 include "Ember/vendor/GLFW"
 include "Ember/vendor/glad"
@@ -51,7 +52,8 @@ project "Ember"
 		"%{IncludeDir.glad}",
 		"%{IncludeDir.imgui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}"
 	}
 
 	links {
@@ -97,7 +99,8 @@ project "Sandbox"
 		"Ember/vendor/spdlog/include",
 		"Ember/src",
 		"Ember/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links {"Ember"}
