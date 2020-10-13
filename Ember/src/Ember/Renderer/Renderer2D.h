@@ -50,6 +50,12 @@ namespace Ember {
 		// Vec3 for position - rotation (radians) - subtexture - tiling factor - tint color
 		static void DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
+		// Transform - color
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
+
+		// Transform - texture - tiling factor - tint color
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
+
 		// Stats
 		struct Statistics {
 			uint32_t DrawCalls = 0;
@@ -63,8 +69,8 @@ namespace Ember {
 		static Statistics GetStats();
 		
 	private:
-		static void PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor);
-		static void PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor, const glm::vec2* textureCoords);
+		static void PopulateQuadVertexBuffer(const glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor);
+		static void PopulateQuadVertexBuffer(const glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor, const glm::vec2* textureCoords);
 		static void FlushAndReset();
 	};
 }

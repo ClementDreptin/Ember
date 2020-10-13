@@ -154,17 +154,10 @@ namespace Ember {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color) {
 		EB_PROFILE_FUNCTION();
 
-		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
-		}
-
-		const float textureIndex = 0.0f; // Texture index is always 0 when it's just a plain color
-		const float tilingFactor = 1.0f;
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
+		DrawQuad(transform, color);
 	}
 
 	// Vec2 for position - rotation (radians) - color
@@ -199,29 +192,10 @@ namespace Ember {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
 		EB_PROFILE_FUNCTION();
 
-		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
-		}
-
-		float textureIndex = 0.0f;
-
-		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++) {
-			if (*s_Data.TextureSlots[i].get() == *texture.get()) {
-				textureIndex = (float)i;
-				break;
-			}
-		}
-
-		if (textureIndex == 0.0f) {
-			textureIndex = (float)s_Data.TextureSlotIndex;
-			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-			s_Data.TextureSlotIndex++;
-		}
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		PopulateQuadVertexBuffer(transform, tintColor, textureIndex, tilingFactor);
+		DrawQuad(transform, texture, tilingFactor);
 	}
 
 	// Vec2 for position - no rotation - subtexture - tiling factor - tint color
@@ -332,7 +306,49 @@ namespace Ember {
 		PopulateQuadVertexBuffer(transform, tintColor, textureIndex, tilingFactor, textureCoords);
 	}
 
-	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor, const glm::vec2* textureCoords) {
+	// Transform - color
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
+		EB_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
+
+		const float textureIndex = 0.0f; // Texture index is always 0 when it's just a plain color
+		const float tilingFactor = 1.0f;
+
+		PopulateQuadVertexBuffer(transform, color, textureIndex, tilingFactor);
+	}
+
+	// Transform - texture - tiling factor - tint color
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
+		EB_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
+
+		float textureIndex = 0.0f;
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++) {
+			if (*s_Data.TextureSlots[i].get() == *texture.get()) {
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f) {
+			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				FlushAndReset();
+
+			textureIndex = (float)s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			s_Data.TextureSlotIndex++;
+		}
+
+		PopulateQuadVertexBuffer(transform, tintColor, textureIndex, tilingFactor);
+	}
+
+	void Renderer2D::PopulateQuadVertexBuffer(const glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor, const glm::vec2* textureCoords) {
 		for (int i = 0; i < 4; i++) {
 			s_Data.QuadVertexBufferPointer->Position = transform * s_Data.QuadVertexPositions[i];
 			s_Data.QuadVertexBufferPointer->Color = color;
@@ -347,7 +363,7 @@ namespace Ember {
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::PopulateQuadVertexBuffer(glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
+	void Renderer2D::PopulateQuadVertexBuffer(const glm::mat4& transform, const glm::vec4& color, float textureIndex, float tilingFactor) {
 		constexpr glm::vec2 textureCoords[] = {
 			{ 0.0f, 0.0f },
 			{ 1.0f, 0.0f },

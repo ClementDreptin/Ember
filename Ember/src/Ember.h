@@ -2,6 +2,8 @@
 
 // FOR USE BY EMBER APPS
 
+#include "Ember/Core/Core.h"
+
 #include "Ember/Core/App.h"
 #include "Ember/Core/Layer.h"
 #include "Ember/Core/Log.h"
@@ -14,6 +16,9 @@
 #include "Ember/Renderer/OrthographicCameraController.h"
 
 #include "Ember/ImGui/ImGuiLayer.h"
+
+#include "Ember/Scene/Scene.h"
+#include "Ember/Scene/Components.h"
 
 #include "Ember/Renderer/Renderer.h"
 #include "Ember/Renderer/Renderer2D.h"

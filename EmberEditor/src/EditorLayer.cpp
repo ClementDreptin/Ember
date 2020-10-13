@@ -5,64 +5,52 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Ember {
+
 	EditorLayer::EditorLayer()
-		: Layer("EditorLayer"),
-		m_CameraController(1280.0f / 720.0f),
-		m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }) {}
+		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }) {}
 
 	void EditorLayer::OnAttach() {
 		EB_PROFILE_FUNCTION();
 
-		m_CheckerboardTexture = Ember::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
-		Ember::FrameBufferSpec spec;
-		spec.Width = 1280;
-		spec.Height = 720;
-		m_FrameBuffer = Ember::FrameBuffer::Create(spec);
+		FrameBufferSpec fbSpec;
+		fbSpec.Width = 1280;
+		fbSpec.Height = 720;
+		m_FrameBuffer = FrameBuffer::Create(fbSpec);
+
+		m_ActiveScene = CreateRef<Scene>();
+
+		auto square = m_ActiveScene->CreateEntity();
+		m_ActiveScene->Reg().emplace<TransformComponent>(square);
+		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
+		m_SquareEntity = square;
 	}
 
 	void EditorLayer::OnDetach() {
 		EB_PROFILE_FUNCTION();
 	}
 
-	void EditorLayer::OnUpdate(Ember::Timestep ts) {
-		EB_PROFILE_SCOPE("CameraController::OnUpdate");
+	void EditorLayer::OnUpdate(Timestep ts) {
+		EB_PROFILE_FUNCTION();
 
 		if (m_ViewportFocused) {
 			m_CameraController.OnUpdate(ts);
 		}
 
-		Ember::Renderer2D::ResetStats();
+		Renderer2D::ResetStats();
+		m_FrameBuffer->Bind();
+		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		RenderCommand::Clear();
 
-		{
-			EB_PROFILE_SCOPE("Renderer Prep");
-			m_FrameBuffer->Bind();
-			Ember::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-			Ember::RenderCommand::Clear();
-		}
+		Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-		{
-			static float rotation = 0.0f;
-			rotation += ts * 50.0f;
+		m_ActiveScene->OnUpdate(ts);
 
-			EB_PROFILE_SCOPE("Renderer Draw");
-			Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
-			Ember::Renderer2D::DrawQuad({ -1.0f, 0.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Ember::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-			Ember::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, m_CheckerboardTexture, 10.0f);
-			Ember::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, glm::radians(rotation), { 1.0f, 1.0f }, m_CheckerboardTexture, 20.0f);
-			Ember::Renderer2D::EndScene();
+		Renderer2D::EndScene();
 
-			Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
-			for (float y = -5.0f; y < 5; y += 0.5f) {
-				for (float x = -5.0f; x < 5; x += 0.5f) {
-					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-					Ember::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-				}
-			}
-			Ember::Renderer2D::EndScene();
-			m_FrameBuffer->Unbind();
-		}
+		m_FrameBuffer->Unbind();
 	}
 
 	void EditorLayer::OnImGuiRender() {
@@ -85,15 +73,17 @@ namespace Ember {
 			window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 		}
 
-		if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
+		if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) {
 			window_flags |= ImGuiWindowFlags_NoBackground;
+		}
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 		ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
 		ImGui::PopStyleVar();
 
-		if (opt_fullscreen)
+		if (opt_fullscreen) {
 			ImGui::PopStyleVar(2);
+		}
 
 		// DockSpace
 		ImGuiIO& io = ImGui::GetIO();
@@ -104,7 +94,7 @@ namespace Ember {
 
 		if (ImGui::BeginMenuBar()) {
 			if (ImGui::BeginMenu("File")) {
-				if (ImGui::MenuItem("Exit")) Ember::App::Get().Close();
+				if (ImGui::MenuItem("Exit")) App::Get().Close();
 				ImGui::EndMenu();
 			}
 
@@ -113,14 +103,15 @@ namespace Ember {
 
 		ImGui::Begin("Settings");
 
-		auto stats = Ember::Renderer2D::GetStats();
+		auto stats = Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
+		auto& squareColor = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 
 		ImGui::End();
 
@@ -132,7 +123,7 @@ namespace Ember {
 		App::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (m_ViewportSize != *((glm::vec2*) & viewportPanelSize)) {
+		if (m_ViewportSize != *((glm::vec2*) & viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0) {
 			m_FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
@@ -146,7 +137,7 @@ namespace Ember {
 		ImGui::End();
 	}
 
-	void EditorLayer::OnEvent(Ember::Event& e) {
+	void EditorLayer::OnEvent(Event& e) {
 		m_CameraController.OnEvent(e);
 	}
 }
