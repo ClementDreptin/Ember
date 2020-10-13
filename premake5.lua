@@ -99,8 +99,7 @@ project "Sandbox"
 		"Ember/vendor/spdlog/include",
 		"Ember/src",
 		"Ember/vendor",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.glm}"
 	}
 
 	links {"Ember"}
@@ -143,7 +142,8 @@ project "EmberEditor"
 		"Ember/vendor/spdlog/include",
 		"Ember/src",
 		"Ember/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links {"Ember"}

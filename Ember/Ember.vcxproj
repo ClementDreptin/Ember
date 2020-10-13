@@ -171,6 +171,7 @@
     <ClInclude Include="src\Ember\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Ember\Renderer\Texture.h" />
     <ClInclude Include="src\Ember\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Ember\Scene\Components.h" />
     <ClInclude Include="src\Ember\Scene\Scene.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
@@ -638,4 +639,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 
