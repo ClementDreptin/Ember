@@ -14,25 +14,25 @@ namespace Ember {
 	void OrthographicCameraController::OnUpdate(Timestep timestep) {
 		EB_PROFILE_FUNCTION();
 
-		if (Input::IsKeyPressed(EB_KEY_A)) {
+		if (Input::IsKeyPressed(Key::A)) {
 			m_CameraPosition.x -= m_CameraTranslationSpeed * timestep;
 		}
-		else if (Input::IsKeyPressed(EB_KEY_D)) {
+		else if (Input::IsKeyPressed(Key::D)) {
 			m_CameraPosition.x += m_CameraTranslationSpeed * timestep;
 		}
 
-		if (Input::IsKeyPressed(EB_KEY_W)) {
+		if (Input::IsKeyPressed(Key::W)) {
 			m_CameraPosition.y += m_CameraTranslationSpeed * timestep;
 		}
-		else if (Input::IsKeyPressed(EB_KEY_S)) {
+		else if (Input::IsKeyPressed(Key::S)) {
 			m_CameraPosition.y -= m_CameraTranslationSpeed * timestep;
 		}
 
 		if (m_Rotation) {
-			if (Input::IsKeyPressed(EB_KEY_Q)) {
+			if (Input::IsKeyPressed(Key::Q)) {
 				m_CameraRotation += m_CameraRotationSpeed * timestep;
 			}
-			else if (Input::IsKeyPressed(EB_KEY_E)) {
+			else if (Input::IsKeyPressed(Key::E)) {
 				m_CameraRotation -= m_CameraRotationSpeed * timestep;
 			}
 

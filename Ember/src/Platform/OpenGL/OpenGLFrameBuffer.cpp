@@ -4,6 +4,8 @@
 #include <glad/glad.h>
 
 namespace Ember {
+	static const uint32_t s_MaxFrameBufferSize = 8192;
+
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBufferSpec& spec) 
 		: m_Spec(spec) {
 		Invalidate();
@@ -53,6 +55,11 @@ namespace Ember {
 	}
 
 	void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height) {
+		if (width == 0 || height == 0 || width > s_MaxFrameBufferSize || height > s_MaxFrameBufferSize) {
+			EB_CORE_WARN("Attempted to resize framebuffer to {0}, {1}", width, height);
+			return;
+		}
+
 		m_Spec.Width = width;
 		m_Spec.Height = height;
 		Invalidate();
