@@ -109,11 +109,13 @@ namespace Ember {
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-		ImGui::Separator();
-		ImGui::Text(m_SquareEntity.GetComponent<TagComponent>().Tag.c_str());
-		auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-		ImGui::Separator();
+		if (m_SquareEntity) {
+			ImGui::Separator();
+			ImGui::Text(m_SquareEntity.GetComponent<TagComponent>().Tag.c_str());
+			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+			ImGui::Separator();
+		}
 
 		ImGui::End();
 
