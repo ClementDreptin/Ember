@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Ember/Renderer/Camera.h"
+
 namespace Ember {
 	struct TagComponent {
 		std::string Tag;
@@ -33,5 +35,15 @@ namespace Ember {
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			: Color(color) {}
+	};
+
+	struct CameraComponent {
+		Ember::Camera Camera;
+		bool Primary = true;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: Camera(projection) {}
 	};
 }
