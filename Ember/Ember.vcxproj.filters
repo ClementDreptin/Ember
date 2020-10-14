@@ -117,6 +117,9 @@
     <ClInclude Include="src\Ember\Renderer\Buffer.h">
       <Filter>src\Ember\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ember\Renderer\Camera.h">
+      <Filter>src\Ember\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ember\Renderer\FrameBuffer.h">
       <Filter>src\Ember\Renderer</Filter>
     </ClInclude>
@@ -154,6 +157,9 @@
       <Filter>src\Ember\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ember\Scene\Components.h">
+      <Filter>src\Ember\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ember\Scene\Entity.h">
       <Filter>src\Ember\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Ember\Scene\Scene.h">
@@ -1413,7 +1419,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ember\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ember\Core\App.cpp">
@@ -1467,6 +1472,9 @@
     <ClCompile Include="src\Ember\Renderer\VertexArray.cpp">
       <Filter>src\Ember\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ember\Scene\Entity.cpp">
+      <Filter>src\Ember\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ember\Scene\Scene.cpp">
       <Filter>src\Ember\Scene</Filter>
     </ClCompile>
@@ -1503,6 +1511,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ember\Scene\Entity.cpp" />
   </ItemGroup>
 </Project>
