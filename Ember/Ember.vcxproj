@@ -175,6 +175,7 @@
     <ClInclude Include="src\Ember\Scene\Components.h" />
     <ClInclude Include="src\Ember\Scene\Entity.h" />
     <ClInclude Include="src\Ember\Scene\Scene.h" />
+    <ClInclude Include="src\Ember\Scene\SceneCamera.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
@@ -614,6 +615,7 @@
     <ClCompile Include="src\Ember\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Ember\Scene\Entity.cpp" />
     <ClCompile Include="src\Ember\Scene\Scene.cpp" />
+    <ClCompile Include="src\Ember\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
@@ -642,4 +644,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project> 
+</Project>

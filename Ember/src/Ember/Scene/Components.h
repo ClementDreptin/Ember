@@ -2,17 +2,17 @@
 
 #include <glm/glm.hpp>
 
-#include "Ember/Renderer/Camera.h"
+#include "SceneCamera.h"
 
 namespace Ember {
+
 	struct TagComponent {
 		std::string Tag;
 
 		TagComponent() = default;
-		TagComponent(const TagComponent& other) = default;
+		TagComponent(const TagComponent&) = default;
 		TagComponent(const std::string& tag)
 			: Tag(tag) {}
-
 	};
 
 	struct TransformComponent {
@@ -38,12 +38,11 @@ namespace Ember {
 	};
 
 	struct CameraComponent {
-		Ember::Camera Camera;
+		SceneCamera Camera;
 		bool Primary = true;
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			: Camera(projection) {}
 	};
 }
