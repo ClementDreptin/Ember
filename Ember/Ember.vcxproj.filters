@@ -1420,6 +1420,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Ember\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Ember\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ember\Core\App.cpp">
