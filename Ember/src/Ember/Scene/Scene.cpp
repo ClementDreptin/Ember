@@ -61,8 +61,6 @@ namespace Ember {
 			}
 
 			Renderer2D::EndScene();
-			
-			// Comment to show CEVz how git works!
 		}
 	}
 
