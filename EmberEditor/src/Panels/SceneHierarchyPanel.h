@@ -19,5 +19,6 @@ namespace Ember {
 		Entity m_SelectionContext;
 
 		void DrawEntityNode(Entity entity);
+		void DrawComponents(Entity entity);
 	};
 }
