@@ -39,5 +39,11 @@ namespace Ember {
 
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+
+		bool OnKeyPressed(KeyPressedEvent& e);
+
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
 	};
 }

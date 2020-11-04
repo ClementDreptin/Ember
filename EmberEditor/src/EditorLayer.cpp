@@ -6,6 +6,8 @@
 
 #include "Ember/Scene/SceneSerializer.h"
 
+#include "Ember/Utils/PlatformUtils.h"
+
 namespace Ember {
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }) {}
@@ -148,14 +150,16 @@ namespace Ember {
 
 		if (ImGui::BeginMenuBar()) {
 			if (ImGui::BeginMenu("File")) {
-				if (ImGui::MenuItem("Serialize")) {
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Serialize("assets/scenes/Example.ember");
+				if (ImGui::MenuItem("New", "Ctrl+N")) {
+					NewScene();
 				}
 
-				if (ImGui::MenuItem("Deserialize")) {
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Deserialize("assets/scenes/Example.ember");
+				if (ImGui::MenuItem("Open...", "Ctrl+0")) {
+					OpenScene();
+				}
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S")) {
+					SaveSceneAs();
 				}
 
 				if (ImGui::MenuItem("Exit")) {
@@ -200,5 +204,67 @@ namespace Ember {
 
 	void EditorLayer::OnEvent(Event& e) {
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.dispatch<KeyPressedEvent>(EB_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e) {
+		if (e.GetRepeatCount() > 0) {
+			return false;
+		}
+
+		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+
+		switch (e.GetKeyCode()) {
+			case Key::N:
+				if (control) {
+					EB_CORE_TRACE("ctrl+N pressed");
+					NewScene();
+				}
+				break;
+			case Key::O:
+				if (control) {
+					EB_CORE_TRACE("ctrl+O pressed");
+					OpenScene();
+				}
+				break;
+			case Key::S:
+				if (control && shift) {
+					SaveSceneAs();
+				}
+				break;
+			default:
+				break;
+		}
+	}
+
+	void EditorLayer::NewScene() {
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene() {
+		std::string filePath = FileDialogs::OpenFile("Ember Scene (*.ember)\0*.ember\0");
+
+		if (!filePath.empty()) {
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filePath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs() {
+		std::string filePath = FileDialogs::SaveFile("Ember Scene (*.ember)\0*.ember\0");
+
+		if (!filePath.empty()) {
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filePath);
+		}
 	}
 }
