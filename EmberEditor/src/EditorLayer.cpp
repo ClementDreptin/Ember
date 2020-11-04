@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Ember/Scene/SceneSerializer.h"
+
 namespace Ember {
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }) {}
@@ -20,6 +22,7 @@ namespace Ember {
 
 		m_ActiveScene = CreateRef<Scene>();
 
+#if 0
 		auto greenSquare = m_ActiveScene->CreateEntity("Green Square");
 		greenSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
@@ -65,7 +68,7 @@ namespace Ember {
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
+#endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
@@ -145,7 +148,19 @@ namespace Ember {
 
 		if (ImGui::BeginMenuBar()) {
 			if (ImGui::BeginMenu("File")) {
-				if (ImGui::MenuItem("Exit")) App::Get().Close();
+				if (ImGui::MenuItem("Serialize")) {
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Serialize("assets/scenes/Example.ember");
+				}
+
+				if (ImGui::MenuItem("Deserialize")) {
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Deserialize("assets/scenes/Example.ember");
+				}
+
+				if (ImGui::MenuItem("Exit")) {
+					App::Get().Close();
+				}
 				ImGui::EndMenu();
 			}
 

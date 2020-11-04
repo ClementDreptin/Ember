@@ -25,6 +25,7 @@ namespace Ember {
 		void OnComponentAdded(Entity entity, T& component);
 
 		friend class Entity;
+		friend class SceneSerializer;
 		friend class SceneHierarchyPanel;
 	};
 }
