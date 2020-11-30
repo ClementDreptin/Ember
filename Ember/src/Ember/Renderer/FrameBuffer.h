@@ -3,13 +3,15 @@
 #include "Ember/Core/Core.h"
 
 namespace Ember {
-	struct FrameBufferSpec {
+	struct FrameBufferSpec
+	{
 		uint32_t Width, Height;
 		uint32_t Samples = 1;
 		bool SwapChainTarget = false;
 	};
 
-	class FrameBuffer {
+	class FrameBuffer
+	{
 	public:
 		virtual ~FrameBuffer() = default;
 

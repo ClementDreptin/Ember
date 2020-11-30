@@ -3,14 +3,16 @@
 #include "Event.h"
 
 namespace Ember {
-	class WindowResizeEvent : public Event {
+	class WindowResizeEvent : public Event
+	{
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
 
 		inline unsigned int GetWidth() const { return m_Width; }
 		inline unsigned int GetHeight() const { return m_Height; }
 
-		std::string ToString() const override {
+		std::string ToString() const override
+		{
 			std::stringstream ss;
 			ss << "WindowResizedEvent: " << m_Width << "," << m_Height;
 			return ss.str();
@@ -22,7 +24,8 @@ namespace Ember {
 		unsigned int m_Width, m_Height;
 	};
 
-	class WindowCloseEvent : public Event {
+	class WindowCloseEvent : public Event
+	{
 	public:
 		WindowCloseEvent() {}
 
@@ -30,7 +33,8 @@ namespace Ember {
 		EVENT_CLASS_CATEGORY(EventCategoryApp)
 	};
 
-	class AppTickEvent : public Event {
+	class AppTickEvent : public Event
+	{
 	public:
 		AppTickEvent() {}
 
@@ -38,7 +42,8 @@ namespace Ember {
 		EVENT_CLASS_CATEGORY(EventCategoryApp)
 	};
 
-	class AppUpdateEvent : public Event {
+	class AppUpdateEvent : public Event
+	{
 	public:
 		AppUpdateEvent() {}
 
@@ -46,7 +51,8 @@ namespace Ember {
 		EVENT_CLASS_CATEGORY(EventCategoryApp)
 	};
 
-	class AppRenderEvent : public Event {
+	class AppRenderEvent : public Event
+	{
 	public:
 		AppRenderEvent() {}
 

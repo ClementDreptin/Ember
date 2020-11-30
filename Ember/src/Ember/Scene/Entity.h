@@ -5,14 +5,16 @@
 #include "entt.hpp"
 
 namespace Ember {
-	class Entity {
+	class Entity
+	{
 	public:
 		Entity() = default;
 		Entity(entt::entity handle, Scene* scene);
 		Entity(const Entity& other) = default;
 
 		template<typename T, typename... Args>
-		T& AddComponent(Args&&... args) {
+		T& AddComponent(Args&&... args)
+		{
 			EB_CORE_ASSERT(!HasComponent<T>(), "Entity already has component!");
 			T& component = m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
 			m_Scene->OnComponentAdded<T>(*this, component);
@@ -20,18 +22,21 @@ namespace Ember {
 		}
 
 		template<typename T>
-		T& GetComponent() {
+		T& GetComponent()
+		{
 			EB_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
 			return m_Scene->m_Registry.get<T>(m_EntityHandle);
 		}
 
 		template<typename T>
-		bool HasComponent() {
+		bool HasComponent()
+		{
 			return m_Scene->m_Registry.has<T>(m_EntityHandle);
 		}
 
 		template<typename T>
-		void RemoveComponent() {
+		void RemoveComponent()
+		{
 			EB_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
 			m_Scene->m_Registry.remove<T>(m_EntityHandle);
 		}

@@ -7,7 +7,8 @@
 namespace Ember {
 	class Entity;
 
-	class Scene {
+	class Scene
+	{
 	public:
 		Scene();
 		~Scene();

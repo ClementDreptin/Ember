@@ -3,7 +3,8 @@
 #include <string>
 
 namespace Ember {
-	class FileDialogs {
+	class FileDialogs
+	{
 	public:
 		// These return empty string if cancelled
 		static std::string OpenFile(const char* filter);

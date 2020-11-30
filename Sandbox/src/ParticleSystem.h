@@ -2,7 +2,8 @@
 
 #include <Ember.h>
 
-struct ParticleProps {
+struct ParticleProps
+{
 	glm::vec2 Position;
 	glm::vec2 Velocity, VelocityVariation;
 	glm::vec4 ColorBegin, ColorEnd;
@@ -10,7 +11,8 @@ struct ParticleProps {
 	float LifeTime = 1.0f;
 };
 
-class ParticleSystem {
+class ParticleSystem
+{
 public:
 	ParticleSystem(uint32_t maxParticles = 100000);
 
@@ -19,7 +21,8 @@ public:
 
 	void Emit(const ParticleProps& particleProps);
 private:
-	struct Particle {
+	struct Particle
+	{
 		glm::vec2 Position;
 		glm::vec2 Velocity;
 		glm::vec4 ColorBegin, ColorEnd;

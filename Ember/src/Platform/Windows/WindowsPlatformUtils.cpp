@@ -9,7 +9,8 @@
 #include "Ember/Core/App.h"
 
 namespace Ember {
-	std::string FileDialogs::OpenFile(const char* filter) {
+	std::string FileDialogs::OpenFile(const char* filter)
+	{
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };
 
@@ -22,14 +23,14 @@ namespace Ember {
 		ofn.nFilterIndex = 1;
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
-		if (GetOpenFileNameA(&ofn) == TRUE) {
+		if (GetOpenFileNameA(&ofn) == TRUE)
 			return ofn.lpstrFile;
-		}
 
 		return std::string();
 	}
 
-	std::string FileDialogs::SaveFile(const char* filter) {
+	std::string FileDialogs::SaveFile(const char* filter)
+	{
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };
 
@@ -42,9 +43,8 @@ namespace Ember {
 		ofn.nFilterIndex = 1;
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
-		if (GetSaveFileNameA(&ofn) == TRUE) {
+		if (GetSaveFileNameA(&ofn) == TRUE)
 			return ofn.lpstrFile;
-		}
 
 		return std::string();
 	}

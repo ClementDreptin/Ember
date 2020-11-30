@@ -6,7 +6,8 @@
 #include <GLFW/glfw3.h>
 
 namespace Ember {
-	class WindowsWindow : public Window {
+	class WindowsWindow : public Window
+	{
 	public:
 		WindowsWindow(const WindowProps& props);
 		virtual ~WindowsWindow();
@@ -29,7 +30,8 @@ namespace Ember {
 		GLFWwindow* m_Window;
 		GraphicsContext* m_Context;
 
-		struct WindowData {
+		struct WindowData
+		{
 			std::string title;
 			unsigned int width, height;
 			bool VSync;

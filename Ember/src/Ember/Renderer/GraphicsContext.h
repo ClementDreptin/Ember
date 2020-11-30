@@ -1,7 +1,8 @@
 #pragma once
 
 namespace Ember {
-	class GraphicsContext {
+	class GraphicsContext
+	{
 	public:
 		virtual ~GraphicsContext() = default;
 

@@ -3,7 +3,8 @@
 #include "Ember/Core/Core.h"
 
 namespace Ember {
-	class Input {
+	class Input
+	{
 	public:
 		static bool IsKeyPressed(int keyCode);
 

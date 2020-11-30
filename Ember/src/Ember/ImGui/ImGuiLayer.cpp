@@ -15,7 +15,8 @@ namespace Ember {
 	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 	ImGuiLayer::~ImGuiLayer() {}
 
-	void ImGuiLayer::OnAttach() {
+	void ImGuiLayer::OnAttach()
+	{
 		EB_PROFILE_FUNCTION();
 
 		// Setup Dear ImGui context
@@ -54,7 +55,8 @@ namespace Ember {
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	void ImGuiLayer::OnDetach() {
+	void ImGuiLayer::OnDetach()
+	{
 		EB_PROFILE_FUNCTION();
 
 		ImGui_ImplOpenGL3_Shutdown();
@@ -62,15 +64,18 @@ namespace Ember {
 		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnEvent(Event& event) {
-		if (m_BlockEvents) {
+	void ImGuiLayer::OnEvent(Event& event)
+	{
+		if (m_BlockEvents)
+		{
 			ImGuiIO& io = ImGui::GetIO();
 			event.m_Handled |= event.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
 			event.m_Handled |= event.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
 		}
 	}
 
-	void ImGuiLayer::Begin() {
+	void ImGuiLayer::Begin()
+	{
 		EB_PROFILE_FUNCTION();
 
 		ImGui_ImplOpenGL3_NewFrame();
@@ -78,7 +83,8 @@ namespace Ember {
 		ImGui::NewFrame();
 	}
 
-	void ImGuiLayer::End() {
+	void ImGuiLayer::End()
+	{
 		EB_PROFILE_FUNCTION();
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -89,7 +95,8 @@ namespace Ember {
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
 			GLFWwindow* backup_current_context = glfwGetCurrentContext();
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
@@ -97,7 +104,8 @@ namespace Ember {
 		}
 	}
 
-	void ImGuiLayer::SetDarkThemeColors() {
+	void ImGuiLayer::SetDarkThemeColors()
+	{
 		auto& colors = ImGui::GetStyle().Colors;
 		colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.105f, 0.11f, 1.0f };
 

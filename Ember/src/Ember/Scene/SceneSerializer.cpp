@@ -8,8 +8,10 @@
 
 namespace YAML {
 	template<>
-	struct convert<glm::vec3> {
-		static Node encode(const glm::vec3& rhs) {
+	struct convert<glm::vec3>
+	{
+		static Node encode(const glm::vec3& rhs)
+		{
 			Node node;
 			node.push_back(rhs.x);
 			node.push_back(rhs.y);
@@ -17,10 +19,10 @@ namespace YAML {
 			return node;
 		}
 
-		static bool decode(const Node& node, glm::vec3& rhs) {
-			if (!node.IsSequence() || node.size() != 3) {
+		static bool decode(const Node& node, glm::vec3& rhs)
+		{
+			if (!node.IsSequence() || node.size() != 3)
 				return false;
-			}
 
 			rhs.x = node[0].as<float>();
 			rhs.y = node[1].as<float>();
@@ -30,8 +32,10 @@ namespace YAML {
 	};
 
 	template<>
-	struct convert<glm::vec4> {
-		static Node encode(const glm::vec4& rhs) {
+	struct convert<glm::vec4>
+	{
+		static Node encode(const glm::vec4& rhs)
+		{
 			Node node;
 			node.push_back(rhs.x);
 			node.push_back(rhs.y);
@@ -40,10 +44,10 @@ namespace YAML {
 			return node;
 		}
 
-		static bool decode(const Node& node, glm::vec4& rhs) {
-			if (!node.IsSequence() || node.size() != 4) {
+		static bool decode(const Node& node, glm::vec4& rhs)
+		{
+			if (!node.IsSequence() || node.size() != 4)
 				return false;
-			}
 
 			rhs.x = node[0].as<float>();
 			rhs.y = node[1].as<float>();
@@ -55,13 +59,15 @@ namespace YAML {
 }
 
 namespace Ember {
-	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v) {
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
+	{
 		out << YAML::Flow;
 		out << YAML::BeginSeq << v.x << v.y << v.z << YAML::EndSeq;
 		return out;
 	}
 
-	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec4& v) {
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec4& v)
+	{
 		out << YAML::Flow;
 		out << YAML::BeginSeq << v.x << v.y << v.z << v.w << YAML::EndSeq;
 		return out;
@@ -70,11 +76,13 @@ namespace Ember {
 	SceneSerializer::SceneSerializer(const Ref<Scene>& scene)
 		: m_Scene(scene) {}
 
-	static void SerializeEntity(YAML::Emitter& out, Entity entity) {
+	static void SerializeEntity(YAML::Emitter& out, Entity entity)
+	{
 		out << YAML::BeginMap; // Entity - START
 		out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
 
-		if (entity.HasComponent<TagComponent>()) {
+		if (entity.HasComponent<TagComponent>())
+		{
 			out << YAML::Key << "TagComponent";
 			out << YAML::BeginMap; // TagComponent - START
 
@@ -84,7 +92,8 @@ namespace Ember {
 			out << YAML::EndMap; // TagComponent - END
 		}
 
-		if (entity.HasComponent<TransformComponent>()) {
+		if (entity.HasComponent<TransformComponent>())
+		{
 			out << YAML::Key << "TransformComponent";
 			out << YAML::BeginMap; // TransformComponent - START
 
@@ -96,7 +105,8 @@ namespace Ember {
 			out << YAML::EndMap; // TransformComponent - END
 		}
 
-		if (entity.HasComponent<CameraComponent>()) {
+		if (entity.HasComponent<CameraComponent>())
+		{
 			out << YAML::Key << "CameraComponent";
 			out << YAML::BeginMap; // CameraComponent - START
 
@@ -120,7 +130,8 @@ namespace Ember {
 			out << YAML::EndMap; // CameraComponent - END
 		}
 
-		if (entity.HasComponent<SpriteRendererComponent>()) {
+		if (entity.HasComponent<SpriteRendererComponent>())
+		{
 			out << YAML::Key << "SpriteRendererComponent";
 			out << YAML::BeginMap; // SpriteRendererComponent - START
 
@@ -133,16 +144,17 @@ namespace Ember {
 		out << YAML::EndMap; // Entity - END
 	}
 
-	void SceneSerializer::Serialize(const std::string& filePath) {
+	void SceneSerializer::Serialize(const std::string& filePath)
+	{
 		YAML::Emitter out;
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
-		m_Scene->m_Registry.each([&](auto entityID) {
+		m_Scene->m_Registry.each([&](auto entityID)
+		{
 			Entity entity = { entityID, m_Scene.get() };
-			if (!entity) {
+			if (!entity)
 				return;
-			}
 
 			SerializeEntity(out, entity);
 		});
@@ -154,41 +166,44 @@ namespace Ember {
 		fout << out.c_str();
 	}
 
-	void SceneSerializer::SerializeRuntime(const std::string& filePath) {
+	void SceneSerializer::SerializeRuntime(const std::string& filePath)
+	{
 		// Not implemented
 		EB_CORE_ASSERT(false);
 	}
 
-	bool SceneSerializer::Deserialize(const std::string& filePath) {
+	bool SceneSerializer::Deserialize(const std::string& filePath)
+	{
 		std::ifstream stream(filePath);
 		std::stringstream strStream;
 		strStream << stream.rdbuf();
 
 		YAML::Node data = YAML::Load(strStream.str());
-		if (!data["Scene"]) {
+		if (!data["Scene"])
 			return false;
-		}
 
 		std::string sceneName = data["Scene"].as<std::string>();
 		EB_CORE_TRACE("Deserializing scene '{0}'", sceneName);
 
 		auto entities = data["Entities"];
-		if (entities) {
-			for (auto entity : entities) {
+		if (entities)
+		{
+			for (auto entity : entities)
+			{
 				uint64_t uuid = entity["Entity"].as<uint64_t>(); // TODO
 
 				std::string name;
 				auto tagComponent = entity["TagComponent"];
-				if (tagComponent) {
+				if (tagComponent)
 					name = tagComponent["Tag"].as<std::string>();
-				}
 
 				EB_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
 
 				Entity deserializedEntity = m_Scene->CreateEntity(name);
 
 				auto transformComponent = entity["TransformComponent"];
-				if (transformComponent) {
+				if (transformComponent)
+				{
 					// Entities always have transforms
 					auto& tc = deserializedEntity.GetComponent<TransformComponent>();
 					tc.Translation = transformComponent["Translation"].as<glm::vec3>();
@@ -197,7 +212,8 @@ namespace Ember {
 				}
 
 				auto cameraComponent = entity["CameraComponent"];
-				if (cameraComponent) {
+				if (cameraComponent)
+				{
 					auto& cc = deserializedEntity.AddComponent<CameraComponent>();
 
 					auto& cameraProps = cameraComponent["Camera"];
@@ -216,7 +232,8 @@ namespace Ember {
 				}
 
 				auto spriteRendererComponent = entity["SpriteRendererComponent"];
-				if (spriteRendererComponent) {
+				if (spriteRendererComponent)
+				{
 					auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
 					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
 				}
@@ -226,7 +243,8 @@ namespace Ember {
 		return true;
 	}
 
-	bool SceneSerializer::DeserializeRuntime(const std::string& filePath) {
+	bool SceneSerializer::DeserializeRuntime(const std::string& filePath)
+	{
 		// Not implemented
 		EB_CORE_ASSERT(false);
 		return false;

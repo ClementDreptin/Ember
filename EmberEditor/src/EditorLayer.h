@@ -4,7 +4,8 @@
 #include "Panels/SceneHierarchyPanel.h"
 
 namespace Ember {
-	class EditorLayer : public Layer {
+	class EditorLayer : public Layer
+	{
 	public:
 		EditorLayer();
 		virtual ~EditorLayer() = default;

@@ -4,7 +4,8 @@
 #include "Ember/Core/Core.h"
 
 namespace Ember {
-	enum class EventType {
+	enum class EventType
+	{
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
@@ -12,7 +13,8 @@ namespace Ember {
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
-	enum EventCategory {
+	enum EventCategory
+	{
 		None = 0,
 		EventCategoryApp = BIT(0),
 		EventCategoryInput = BIT(1),
@@ -27,7 +29,8 @@ namespace Ember {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class Event {
+	class Event
+	{
 		friend class EventDispatcher;
 	public:
 		virtual ~Event() = default;
@@ -39,22 +42,24 @@ namespace Ember {
 		virtual int GetCategoryFlags() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
-		inline bool IsInCategory(EventCategory category) {
+		inline bool IsInCategory(EventCategory category)
+		{
 			return GetCategoryFlags() & category;
 		}
 	};
 
-	class EventDispatcher {
+	class EventDispatcher
+	{
 		template<typename T>
 		using EventFn = std::function<bool(T&)>;
 	public:
-		EventDispatcher(Event& event) : m_Event(event) {
-		
-		}
+		EventDispatcher(Event& event) : m_Event(event) {}
 
 		template<typename T>
-		bool dispatch(EventFn<T> func) {
-			if (m_Event.GetEventType() == T::GetStaticType()) {
+		bool dispatch(EventFn<T> func)
+		{
+			if (m_Event.GetEventType() == T::GetStaticType())
+			{
 				m_Event.m_Handled = func(*(T*)&m_Event);
 				return true;
 			}
@@ -64,7 +69,8 @@ namespace Ember {
 		Event& m_Event;
 	};
 
-	inline std::ostream& operator<<(std::ostream& os, const Event& e) {
+	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	{
 		return os << e.ToString();
 	}
 }

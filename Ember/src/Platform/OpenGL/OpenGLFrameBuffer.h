@@ -3,7 +3,8 @@
 #include "Ember/Renderer/FrameBuffer.h"
 
 namespace Ember {
-	class OpenGLFrameBuffer : public FrameBuffer {
+	class OpenGLFrameBuffer : public FrameBuffer
+	{
 	public:
 		OpenGLFrameBuffer(const FrameBufferSpec& spec);
 		virtual ~OpenGLFrameBuffer();

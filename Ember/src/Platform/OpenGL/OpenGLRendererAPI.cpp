@@ -4,7 +4,8 @@
 #include <glad/glad.h>
 
 namespace Ember {
-	void OpenGLRendererAPI::Init() {
+	void OpenGLRendererAPI::Init()
+	{
 		EB_PROFILE_FUNCTION();
 
 		glEnable(GL_BLEND);
@@ -13,19 +14,23 @@ namespace Ember {
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void OpenGLRendererAPI::SetClearColor(const glm::vec4& color) {
+	void OpenGLRendererAPI::SetClearColor(const glm::vec4& color)
+	{
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
 
-	void OpenGLRendererAPI::SetViewport(uint32_t originX, uint32_t originY, uint32_t width, uint32_t height) {
+	void OpenGLRendererAPI::SetViewport(uint32_t originX, uint32_t originY, uint32_t width, uint32_t height)
+	{
 		glViewport(originX, originY, width, height);
 	}
 
-	void OpenGLRendererAPI::Clear() {
+	void OpenGLRendererAPI::Clear()
+	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount) {
+	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
+	{
 		uint32_t count = indexCount ? vertexArray->GetIndexBuffer()->GetCount() : indexCount;
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 		glBindTexture(GL_TEXTURE_2D, 0); // Little hack that unbinds the texture every time so that not everything has the same texture

@@ -3,7 +3,8 @@
 #include "Ember/Renderer/VertexArray.h"
 
 namespace Ember {
-	class OpenGLVertexArray : public VertexArray {
+	class OpenGLVertexArray : public VertexArray
+	{
 	public:
 		OpenGLVertexArray();
 		virtual ~OpenGLVertexArray();

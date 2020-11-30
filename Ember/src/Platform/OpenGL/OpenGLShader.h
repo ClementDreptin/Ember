@@ -8,7 +8,8 @@
 typedef unsigned int GLenum;
 
 namespace Ember {
-	class OpenGLShader : public Shader {
+	class OpenGLShader : public Shader
+	{
 	public:
 		OpenGLShader(const std::string& path);
 		OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);

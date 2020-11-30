@@ -5,7 +5,8 @@
 #include "Ember/Core/Core.h"
 
 namespace Ember {
-	class Texture {
+	class Texture
+	{
 	public:
 		virtual ~Texture() = default;
 
@@ -20,7 +21,8 @@ namespace Ember {
 		virtual bool operator==(const Texture& other) const = 0;
 	};
 
-	class Texture2D : public Texture {
+	class Texture2D : public Texture
+	{
 	public:
 		static Ref<Texture2D> Create(uint32_t width, uint32_t height);
 		static Ref<Texture2D> Create(const std::string& path);

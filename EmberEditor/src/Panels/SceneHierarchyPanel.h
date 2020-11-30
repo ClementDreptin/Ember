@@ -6,7 +6,8 @@
 #include "Ember/Scene/Entity.h"
 
 namespace Ember {
-	class SceneHierarchyPanel {
+	class SceneHierarchyPanel
+	{
 	public:
 		SceneHierarchyPanel() = default;
 		SceneHierarchyPanel(const Ref<Scene>& context);

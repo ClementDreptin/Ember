@@ -11,30 +11,26 @@ namespace Ember {
 		  m_Camera(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top),
 		  m_Rotation(rotation) {}
 
-	void OrthographicCameraController::OnUpdate(Timestep timestep) {
+	void OrthographicCameraController::OnUpdate(Timestep timestep)
+	{
 		EB_PROFILE_FUNCTION();
 
-		if (Input::IsKeyPressed(Key::A)) {
+		if (Input::IsKeyPressed(Key::A))
 			m_CameraPosition.x -= m_CameraTranslationSpeed * timestep;
-		}
-		else if (Input::IsKeyPressed(Key::D)) {
+		else if (Input::IsKeyPressed(Key::D))
 			m_CameraPosition.x += m_CameraTranslationSpeed * timestep;
-		}
 
-		if (Input::IsKeyPressed(Key::W)) {
+		if (Input::IsKeyPressed(Key::W))
 			m_CameraPosition.y += m_CameraTranslationSpeed * timestep;
-		}
-		else if (Input::IsKeyPressed(Key::S)) {
+		else if (Input::IsKeyPressed(Key::S))
 			m_CameraPosition.y -= m_CameraTranslationSpeed * timestep;
-		}
 
-		if (m_Rotation) {
-			if (Input::IsKeyPressed(Key::Q)) {
+		if (m_Rotation)
+		{
+			if (Input::IsKeyPressed(Key::Q))
 				m_CameraRotation += m_CameraRotationSpeed * timestep;
-			}
-			else if (Input::IsKeyPressed(Key::E)) {
+			else if (Input::IsKeyPressed(Key::E))
 				m_CameraRotation -= m_CameraRotationSpeed * timestep;
-			}
 
 			m_Camera.SetRotation(m_CameraRotation);
 		}
@@ -44,7 +40,8 @@ namespace Ember {
 		m_CameraTranslationSpeed = m_ZoomLevel;
 	}
 
-	void OrthographicCameraController::OnEvent(Event& e) {
+	void OrthographicCameraController::OnEvent(Event& e)
+	{
 		EB_PROFILE_FUNCTION();
 
 		EventDispatcher dispatcher(e);
@@ -60,7 +57,8 @@ namespace Ember {
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 	}
 
-	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e) {
+	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
+	{
 		EB_PROFILE_FUNCTION();
 
 		m_ZoomLevel -= e.GetYOffset() * 0.25f;
@@ -70,7 +68,8 @@ namespace Ember {
 		return false;
 	}
 
-	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e) {
+	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
+	{
 		EB_PROFILE_FUNCTION();
 
 		m_AspectRatio = (float)e.GetWidth() / e.GetHeight();
@@ -79,7 +78,8 @@ namespace Ember {
 		return false;
 	}
 
-	void OrthographicCameraController::CalculateView() {
+	void OrthographicCameraController::CalculateView()
+	{
 		m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
 		m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
 	}

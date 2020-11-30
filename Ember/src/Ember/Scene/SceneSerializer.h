@@ -3,7 +3,8 @@
 #include "Scene.h"
 
 namespace Ember {
-	class SceneSerializer {
+	class SceneSerializer
+	{
 	public:
 		SceneSerializer(const Ref<Scene>& scene);
 

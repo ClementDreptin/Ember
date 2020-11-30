@@ -3,7 +3,8 @@
 #include <glm/glm.hpp>
 
 namespace Ember {
-	class Camera {
+	class Camera
+	{
 	public:
 		Camera() = default;
 		Camera(const glm::mat4& projection)

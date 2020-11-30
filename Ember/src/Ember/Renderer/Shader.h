@@ -6,7 +6,8 @@
 #include <glm/glm.hpp>
 
 namespace Ember {
-	class Shader {
+	class Shader
+	{
 	public:
 		virtual ~Shader() = default;
 
@@ -26,7 +27,8 @@ namespace Ember {
 		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 	};
 
-	class ShaderLibrary {
+	class ShaderLibrary
+	{
 	public:
 		void Add(const Ref<Shader>& shader);
 		void Add(const std::string& name, const Ref<Shader>& shader);

@@ -6,7 +6,8 @@
 #include "Ember/Events/MouseEvent.h"
 
 namespace Ember {
-	class ImGuiLayer : public Layer {
+	class ImGuiLayer : public Layer
+	{
 	public:
 		ImGuiLayer();
 		~ImGuiLayer();

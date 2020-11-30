@@ -5,7 +5,8 @@
 struct GLFWwindow;
 
 namespace Ember {
-	class OpenGLContext : public GraphicsContext {
+	class OpenGLContext : public GraphicsContext
+	{
 	public:
 		OpenGLContext(GLFWwindow* windowHandle);
 

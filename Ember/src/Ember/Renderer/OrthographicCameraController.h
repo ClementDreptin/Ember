@@ -7,7 +7,8 @@
 #include "Ember/Events/MouseEvent.h"
 
 namespace Ember {
-	struct OrthographicCameraBounds {
+	struct OrthographicCameraBounds
+	{
 		float Left, Right;
 		float Bottom, Top;
 
@@ -15,7 +16,8 @@ namespace Ember {
 		float GetHeight() { return Top - Bottom; }
 	};
 
-	class OrthographicCameraController {
+	class OrthographicCameraController
+	{
 	public:
 		OrthographicCameraController(float aspectRatio, bool rotation = false);
 

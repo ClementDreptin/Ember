@@ -1,12 +1,15 @@
 #pragma once
 
 namespace Ember {
-	enum class ShaderDataType {
+	enum class ShaderDataType
+	{
 		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
 	};
 
-	static uint32_t shaderDataTypeSize(ShaderDataType type) {
-		switch (type) {
+	static uint32_t shaderDataTypeSize(ShaderDataType type)
+	{
+		switch (type)
+		{
 			case ShaderDataType::Float: return 4;
 			case ShaderDataType::Float2: return 4 * 2;
 			case ShaderDataType::Float3: return 4 * 3;
@@ -24,7 +27,8 @@ namespace Ember {
 		return 0;
 	}
 
-	struct BufferElement {
+	struct BufferElement
+	{
 		std::string name;
 		ShaderDataType type;
 		uint32_t size;
@@ -36,8 +40,10 @@ namespace Ember {
 		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
 			: name(name), type(type), size(shaderDataTypeSize(type)), offset(0), normalized(normalized) {}
 
-		uint32_t GetComponentCount() const {
-			switch (type) {
+		uint32_t GetComponentCount() const
+		{
+			switch (type)
+			{
 				case ShaderDataType::Float: return 1;
 				case ShaderDataType::Float2: return 2;
 				case ShaderDataType::Float3: return 3;
@@ -56,11 +62,13 @@ namespace Ember {
 		}
 	};
 
-	class BufferLayout {
+	class BufferLayout
+	{
 	public:
 		BufferLayout() {}
 
-		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements) {
+		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
+		{
 			CalculateOffsetsAndStride();
 		}
 
@@ -75,11 +83,13 @@ namespace Ember {
 		std::vector<BufferElement> m_Elements;
 		uint32_t m_Stride = 0;
 
-		void CalculateOffsetsAndStride() {
+		void CalculateOffsetsAndStride()
+		{
 			uint32_t offset = 0;
 			m_Stride = 0;
 
-			for (auto& element : m_Elements) {
+			for (auto& element : m_Elements)
+			{
 				element.offset = offset;
 				offset += element.size;
 				m_Stride += element.size;
@@ -87,7 +97,8 @@ namespace Ember {
 		}
 	};
 
-	class VertexBuffer {
+	class VertexBuffer
+	{
 	public:
 		virtual ~VertexBuffer() {}
 
@@ -103,7 +114,8 @@ namespace Ember {
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
-	class IndexBuffer {
+	class IndexBuffer
+	{
 	public:
 		virtual ~IndexBuffer() {}
 

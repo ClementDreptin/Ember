@@ -3,7 +3,8 @@
 #include "Ember/Renderer/RendererAPI.h"
 
 namespace Ember {
-	class OpenGLRendererAPI : public RendererAPI {
+	class OpenGLRendererAPI : public RendererAPI
+	{
 	public:
 		virtual void Init() override;
 

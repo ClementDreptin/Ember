@@ -3,7 +3,8 @@
 #include <Ember.h>
 #include "ParticleSystem.h"
 
-class Sandbox2D : public Ember::Layer {
+class Sandbox2D : public Ember::Layer
+{
 public:
 	Sandbox2D();
 	virtual ~Sandbox2D() = default;

@@ -12,7 +12,8 @@
 namespace Ember {
 	App* App::s_Instance = nullptr;
 
-	App::App(const std::string& name) {
+	App::App(const std::string& name)
+	{
 		EB_PROFILE_FUNCTION();
 
 		EB_CORE_ASSERT(!s_Instance, "App already exists!");
@@ -27,53 +28,62 @@ namespace Ember {
 		PushOverlay(m_ImGuiLayer);
 	}
 
-	App::~App() {
+	App::~App()
+	{
 		EB_PROFILE_FUNCTION();
 	}
 
-	void App::PushLayer(Layer* layer) {
+	void App::PushLayer(Layer* layer)
+	{
 		EB_PROFILE_FUNCTION();
 
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
 
-	void App::PushOverlay(Layer* layer) {
+	void App::PushOverlay(Layer* layer)
+	{
 		EB_PROFILE_FUNCTION();
 
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
 
-	void App::Close() {
+	void App::Close()
+	{
 		m_Running = false;
 	}
 
-	void App::OnEvent(Event& e) {
+	void App::OnEvent(Event& e)
+	{
 		EB_PROFILE_FUNCTION();
 
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(EB_BIND_EVENT_FN(App::OnWindowClose));
 		dispatcher.dispatch<WindowResizeEvent>(EB_BIND_EVENT_FN(App::OnWindowResize));
 
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		{
 			(*--it)->OnEvent(e);
 			if (e.m_Handled)
 				break;
 		}
 	}
 
-	void App::Run() {
+	void App::Run()
+	{
 		EB_PROFILE_FUNCTION();
 
-		while (m_Running) {
+		while (m_Running)
+		{
 			EB_PROFILE_SCOPE("RunLoop");
 
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
-			if (!m_Minimized) {
+			if (!m_Minimized)
+			{
 				{
 					EB_PROFILE_SCOPE("LayerStack OnUpdate");
 					for (Layer* layer : m_LayerStack) {
@@ -95,15 +105,18 @@ namespace Ember {
 		}
 	}
 
-	bool App::OnWindowClose(WindowCloseEvent& e) {
+	bool App::OnWindowClose(WindowCloseEvent& e)
+	{
 		m_Running = false;
 		return true;
 	}
 
-	bool App::OnWindowResize(WindowResizeEvent& e) {
+	bool App::OnWindowResize(WindowResizeEvent& e)
+	{
 		EB_PROFILE_FUNCTION();
 
-		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
 			m_Minimized = true;
 			return false;
 		}

@@ -3,7 +3,8 @@
 #include "Buffer.h"
 
 namespace Ember {
-	class VertexArray {
+	class VertexArray
+	{
 	public:
 		virtual ~VertexArray() {}
 

@@ -3,7 +3,8 @@
 #include "Ember/Renderer/Buffer.h"
 
 namespace Ember {
-	class OpenGLVertexBuffer : public VertexBuffer {
+	class OpenGLVertexBuffer : public VertexBuffer
+	{
 	public:
 		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size); 
@@ -21,7 +22,8 @@ namespace Ember {
 		BufferLayout m_Layout;
 	};
 
-	class OpenGLIndexBuffer : public IndexBuffer {
+	class OpenGLIndexBuffer : public IndexBuffer
+	{
 	public:
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
 		virtual ~OpenGLIndexBuffer();
@@ -29,7 +31,8 @@ namespace Ember {
 		virtual void Bind() const;
 		virtual void Unbind() const;
 
-		virtual uint32_t GetCount() const {
+		virtual uint32_t GetCount() const
+		{
 			return m_Count;
 		}
 	private:

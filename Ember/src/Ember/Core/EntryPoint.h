@@ -4,7 +4,8 @@
 
 extern Ember::App* Ember::CreateApp();
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	Ember::Log::Init();
 
 	EB_PROFILE_BEGIN_SESSION("Startup", "EmberProfile-Startup.json");

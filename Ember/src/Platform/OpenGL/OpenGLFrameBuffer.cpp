@@ -7,18 +7,22 @@ namespace Ember {
 	static const uint32_t s_MaxFrameBufferSize = 8192;
 
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBufferSpec& spec) 
-		: m_Spec(spec) {
+		: m_Spec(spec)
+	{
 		Invalidate();
 	}
 
-	OpenGLFrameBuffer::~OpenGLFrameBuffer() {
+	OpenGLFrameBuffer::~OpenGLFrameBuffer()
+	{
 		glDeleteFramebuffers(1, &m_RendererID);
 		glDeleteTextures(1, &m_ColorAttachment);
 		glDeleteTextures(1, &m_DepthAttachment);
 	}
 
-	void OpenGLFrameBuffer::Invalidate() {
-		if (m_RendererID) {
+	void OpenGLFrameBuffer::Invalidate()
+	{
+		if (m_RendererID)
+		{
 			glDeleteFramebuffers(1, &m_RendererID);
 			glDeleteTextures(1, &m_ColorAttachment);
 			glDeleteTextures(1, &m_DepthAttachment);
@@ -45,17 +49,21 @@ namespace Ember {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void OpenGLFrameBuffer::Bind() {
+	void OpenGLFrameBuffer::Bind()
+	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 		glViewport(0, 0, m_Spec.Width, m_Spec.Height);
 	}
 
-	void OpenGLFrameBuffer::Unbind() {
+	void OpenGLFrameBuffer::Unbind()
+	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height) {
-		if (width == 0 || height == 0 || width > s_MaxFrameBufferSize || height > s_MaxFrameBufferSize) {
+	void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
+	{
+		if (width == 0 || height == 0 || width > s_MaxFrameBufferSize || height > s_MaxFrameBufferSize)
+		{
 			EB_CORE_WARN("Attempted to resize framebuffer to {0}, {1}", width, height);
 			return;
 		}

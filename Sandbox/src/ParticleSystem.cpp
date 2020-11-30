@@ -7,11 +7,13 @@
 
 class Random {
 public:
-	static void Init() {
+	static void Init()
+	{
 		s_RandomEngine.seed(std::random_device()());
 	}
 
-	static float Float() {
+	static float Float()
+	{
 		return (float)s_Distribution(s_RandomEngine) / (float)std::numeric_limits<uint32_t>::max();
 	}
 
@@ -24,17 +26,20 @@ std::mt19937 Random::s_RandomEngine;
 std::uniform_int_distribution<std::mt19937::result_type> Random::s_Distribution;
 
 ParticleSystem::ParticleSystem(uint32_t maxParticles) 
-	: m_PoolIndex(maxParticles - 1) {
+	: m_PoolIndex(maxParticles - 1)
+{
 	m_ParticlePool.resize(maxParticles);
 }
 
-void ParticleSystem::OnUpdate(Ember::Timestep ts) {
-	for (auto& particle : m_ParticlePool) {
-		if (!particle.Active) {
+void ParticleSystem::OnUpdate(Ember::Timestep ts)
+{
+	for (auto& particle : m_ParticlePool)
+	{
+		if (!particle.Active)
 			continue;
-		}
 
-		if (particle.LifeRemaining <= 0.0f) {
+		if (particle.LifeRemaining <= 0.0f)
+		{
 			particle.Active = false;
 			continue;
 		}
@@ -45,13 +50,14 @@ void ParticleSystem::OnUpdate(Ember::Timestep ts) {
 	}
 }
 
-void ParticleSystem::OnRender(Ember::OrthographicCamera& camera) {
+void ParticleSystem::OnRender(Ember::OrthographicCamera& camera)
+{
 	Ember::Renderer2D::BeginScene(camera);
 
-	for (auto& particle : m_ParticlePool) {
-		if (!particle.Active) {
+	for (auto& particle : m_ParticlePool)
+	{
+		if (!particle.Active)
 			continue;
-		}
 
 		// Fade away particles
 		float life = particle.LifeRemaining / particle.LifeTime;
@@ -66,7 +72,8 @@ void ParticleSystem::OnRender(Ember::OrthographicCamera& camera) {
 	Ember::Renderer2D::EndScene();
 }
 
-void ParticleSystem::Emit(const ParticleProps& particleProps) {
+void ParticleSystem::Emit(const ParticleProps& particleProps)
+{
 	Particle& particle = m_ParticlePool[m_PoolIndex];
 	particle.Active = true;
 	particle.Position = particleProps.Position;

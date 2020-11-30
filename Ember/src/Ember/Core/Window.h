@@ -4,7 +4,8 @@
 #include "Ember/Events/Event.h"
 
 namespace Ember {
-	struct WindowProps {
+	struct WindowProps
+	{
 		std::string title;
 		uint32_t width;
 		uint32_t height;
@@ -12,13 +13,12 @@ namespace Ember {
 		WindowProps(const std::string& title = "Ember",
 					uint32_t width = 1600,
 					uint32_t height = 900)
-			: title(title), width(width), height(height)
-		{
-		}
+			: title(title), width(width), height(height) {}
 	};
 
 	// Interface representing a desktop system based Window
-	class Window {
+	class Window
+	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
 

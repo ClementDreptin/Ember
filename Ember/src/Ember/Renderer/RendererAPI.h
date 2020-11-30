@@ -4,9 +4,11 @@
 #include "VertexArray.h"
 
 namespace Ember {
-	class RendererAPI {
+	class RendererAPI
+	{
 	public:
-		enum class API {
+		enum class API
+		{
 			None = 0, OpenGL = 1,
 		};
 

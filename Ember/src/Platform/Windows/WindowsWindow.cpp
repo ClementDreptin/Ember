@@ -11,27 +11,32 @@
 namespace Ember {
 	static bool s_GLFWInitialized = false;
 
-	static void GLFWErrorCallback(int error, const char* desc) {
+	static void GLFWErrorCallback(int error, const char* desc)
+	{
 		EB_CORE_ERROR("GLFW Error code: ({0}) | {1}", error, desc);
 	}
 
-	Window* Window::Create(const WindowProps& props) {
+	Window* Window::Create(const WindowProps& props)
+	{
 		return new WindowsWindow(props);
 	}
 
-	WindowsWindow::WindowsWindow(const WindowProps& props) {
+	WindowsWindow::WindowsWindow(const WindowProps& props)
+	{
 		EB_PROFILE_FUNCTION();
 
 		Init(props);
 	}
 
-	WindowsWindow::~WindowsWindow() {
+	WindowsWindow::~WindowsWindow()
+	{
 		EB_PROFILE_FUNCTION();
 
 		Shutdown();
 	}
 
-	void WindowsWindow::Init(const WindowProps& props) {
+	void WindowsWindow::Init(const WindowProps& props)
+	{
 		EB_PROFILE_FUNCTION();
 
 		m_Data.title = props.title;
@@ -40,7 +45,8 @@ namespace Ember {
 
 		EB_CORE_INFO("Creating window \"{0}\" ({1}, {2})", props.title, props.width, props.height);
 
-		if (!s_GLFWInitialized) {
+		if (!s_GLFWInitialized)
+		{
 			int success = glfwInit();
 			EB_CORE_ASSERT(success, "Could not initialize GLFW!");
 
@@ -58,7 +64,8 @@ namespace Ember {
 		SetVSync(true);
 
 		// Set GLFW callbacks
-		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 			windowData.width = width;
 			windowData.height = height;
@@ -67,27 +74,33 @@ namespace Ember {
 			windowData.eventCallback(event);
 		});
 
-		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 			WindowCloseEvent event;
 			windowData.eventCallback(event);
 		});
 
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			switch (action) {
-				case GLFW_PRESS: {
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
 					KeyPressedEvent event(key, 0);
 					windowData.eventCallback(event);
 					break;
 				}
-				case GLFW_RELEASE: {
+				case GLFW_RELEASE:
+				{
 					KeyReleasedEvent event(key);
 					windowData.eventCallback(event);
 					break;
 				}
-				case GLFW_REPEAT: {
+				case GLFW_REPEAT:
+				{
 					KeyPressedEvent event(key, 1);
 					windowData.eventCallback(event);
 					break;
@@ -95,23 +108,28 @@ namespace Ember {
 			}
 		});
 
-		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keyCode) {
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keyCode)
+		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			KeyTypedEvent event(keyCode);
 			windowData.eventCallback(event);
 		});
 
-		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			switch (action) {
-				case GLFW_PRESS: {
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
 					MouseButtonPressedEvent event(button);
 					windowData.eventCallback(event);
 					break;
 				}
-				case GLFW_RELEASE: {
+				case GLFW_RELEASE:
+				{
 					MouseButtonReleasedEvent event(button);
 					windowData.eventCallback(event);
 					break;
@@ -119,14 +137,16 @@ namespace Ember {
 			}
 		});
 
-		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			MouseScrolledEvent event((float)xOffset, (float)yOffset);
 			windowData.eventCallback(event);
 		});
 
-		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double x, double y) {
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double x, double y)
+		{
 			WindowData& windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			MouseMovedEvent event((float)x, (float)y);
@@ -134,32 +154,35 @@ namespace Ember {
 		});
 	}
 
-	void WindowsWindow::Shutdown() {
+	void WindowsWindow::Shutdown()
+	{
 		EB_PROFILE_FUNCTION();
 
 		glfwDestroyWindow(m_Window);
 	}
 
-	void WindowsWindow::OnUpdate() {
+	void WindowsWindow::OnUpdate()
+	{
 		EB_PROFILE_FUNCTION();
 
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
-	void WindowsWindow::SetVSync(bool enabled) {
+	void WindowsWindow::SetVSync(bool enabled)
+	{
 		EB_PROFILE_FUNCTION();
 
-		if (enabled) {
+		if (enabled)
 			glfwSwapInterval(1);
-		} else {
+		else
 			glfwSwapInterval(0);
-		}
 
 		m_Data.VSync = enabled;
 	}
 
-	bool WindowsWindow::IsVSync() const {
+	bool WindowsWindow::IsVSync() const
+	{
 		return m_Data.VSync;
 	}
 }

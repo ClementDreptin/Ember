@@ -6,7 +6,8 @@
 #include "Shader.h"
 
 namespace Ember {
-	class Renderer {
+	class Renderer
+	{
 	public:
 		static void Init();
 		static void OnWindowResize(uint32_t width, uint32_t height);
@@ -18,7 +19,8 @@ namespace Ember {
 
 		static inline RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:
-		struct SceneData {
+		struct SceneData
+		{
 			glm::mat4 viewProjectionMatrix;
 		};
 

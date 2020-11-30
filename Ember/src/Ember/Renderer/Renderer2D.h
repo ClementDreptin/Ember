@@ -6,7 +6,8 @@
 #include "SubTexture2D.h"
 
 namespace Ember {
-	class Renderer2D {
+	class Renderer2D
+	{
 	public:
 		static void Init();
 		static void Shutdown();
@@ -59,7 +60,8 @@ namespace Ember {
 		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
 		// Stats
-		struct Statistics {
+		struct Statistics
+		{
 			uint32_t DrawCalls = 0;
 			uint32_t QuadCount = 0;
 

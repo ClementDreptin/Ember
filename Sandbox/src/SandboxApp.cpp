@@ -9,9 +9,11 @@
 
 #include "Sandbox2D.h"
 
-class ExampleLayer : public Ember::Layer {
+class ExampleLayer : public Ember::Layer
+{
 public:
-	ExampleLayer() : Layer("Example"), m_CameraController(1280.0f / 720.0f) {
+	ExampleLayer() : Layer("Example"), m_CameraController(1280.0f / 720.0f)
+	{
 		m_VertexArray = Ember::VertexArray::Create();
 
 		// Triangle - START
@@ -47,7 +49,8 @@ public:
 			out vec3 v_Position;
 			out vec4 v_Color;
 
-			void main() {
+			void main()
+			{
 				v_Position = a_Position;
 				v_Color = a_Color;
 				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
@@ -62,7 +65,8 @@ public:
 			in vec3 v_Position;
 			in vec4 v_Color;
 
-			void main() {
+			void main()
+			{
 				color = vec4(v_Position * 0.5 + 0.5, 1.0);
 				color = v_Color;
 			}
@@ -104,7 +108,8 @@ public:
 
 			out vec3 v_Position;
 
-			void main() {
+			void main()
+			{
 				v_Position = a_Position;
 				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 			}
@@ -119,7 +124,8 @@ public:
 
 			uniform vec3 u_Color;
 
-			void main() {
+			void main()
+			{
 				color = vec4(u_Color, 1.0);
 			}
 		)";
@@ -136,7 +142,8 @@ public:
 		std::dynamic_pointer_cast<Ember::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
-	void OnUpdate(Ember::Timestep timestep) override {
+	void OnUpdate(Ember::Timestep timestep) override
+	{
 		m_CameraController.OnUpdate(timestep);
 
 		Ember::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
@@ -149,8 +156,10 @@ public:
 		std::dynamic_pointer_cast<Ember::OpenGLShader>(m_FlatColorShader)->Bind();
 		std::dynamic_pointer_cast<Ember::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
-		for (int y = 0; y < 10; y++) {
-			for (int x = 0; x < 10; x++) {
+		for (int y = 0; y < 10; y++)
+		{
+			for (int x = 0; x < 10; x++)
+			{
 				glm::vec3 position(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * scale;
 				Ember::Renderer::Submit(m_FlatColorShader, m_SquareVertexArray, transform);
@@ -169,13 +178,15 @@ public:
 		Ember::Renderer::EndScene();
 	}
 
-	virtual void OnImGuiRender() override {
+	virtual void OnImGuiRender() override
+	{
 		ImGui::Begin("Settings");
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
 		ImGui::End();
 	}
 
-	void OnEvent(Ember::Event& event) override {
+	void OnEvent(Ember::Event& event) override
+	{
 		m_CameraController.OnEvent(event);
 	}
 private:
@@ -193,9 +204,11 @@ private:
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 };
 
-class Sandbox : public Ember::App {
+class Sandbox : public Ember::App
+{
 public:
-	Sandbox() {
+	Sandbox()
+	{
 		//PushLayer(new ExampleLayer());
 		PushLayer(new Sandbox2D());
 	}
@@ -203,6 +216,7 @@ public:
 	~Sandbox() {}
 };
 
-Ember::App* Ember::CreateApp() {
+Ember::App* Ember::CreateApp()
+{
 	return new Sandbox();
 }

@@ -3,12 +3,14 @@
 #include "Entity.h"
 
 namespace Ember {
-	class ScriptableEntity {
+	class ScriptableEntity
+	{
 	public:
 		virtual ~ScriptableEntity() {}
 
 		template<typename T>
-		T& GetComponent() {
+		T& GetComponent()
+		{
 			return m_Entity.GetComponent<T>();
 		}
 

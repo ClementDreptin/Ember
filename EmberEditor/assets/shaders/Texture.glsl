@@ -14,7 +14,8 @@ out vec2 v_TextCoord;
 out float v_TextIndex;
 out float v_TilingFactor;
 
-void main() {
+void main()
+{
 	v_Color = a_Color;
 	v_TextCoord = a_TextCoord;
 	v_TextIndex = a_TextIndex;
@@ -34,6 +35,7 @@ in float v_TilingFactor;
 
 uniform sampler2D u_Textures[32];
 
-void main() {
+void main()
+{
 	color = texture(u_Textures[int(v_TextIndex)], v_TextCoord * v_TilingFactor) * v_Color;
 }

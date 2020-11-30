@@ -12,7 +12,8 @@ namespace Ember {
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }) {}
 
-	void EditorLayer::OnAttach() {
+	void EditorLayer::OnAttach()
+	{
 		EB_PROFILE_FUNCTION();
 
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
@@ -40,31 +41,33 @@ namespace Ember {
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
 
-		class CameraController : public ScriptableEntity {
+		class CameraController : public ScriptableEntity
+		{
 		public:
-			void OnCreate() {
+			void OnCreate()
+			{
 				auto& translation = GetComponent<TransformComponent>().Translation;
 				translation.x = rand() % 10 - 5.0f;
 			}
 
 			void OnDestroy() {}
 
-			void OnUpdate(Timestep ts) {
+			void OnUpdate(Timestep ts)
+			{
 				auto& translation = GetComponent<TransformComponent>().Translation;
 				float speed = 5.0f;
 
-				if (Input::IsKeyPressed(Key::A)) {
+				if (Input::IsKeyPressed(Key::A))
 					translation.x -= speed * ts;
-				}
-				if (Input::IsKeyPressed(Key::D)) {
+
+				if (Input::IsKeyPressed(Key::D))
 					translation.x += speed * ts;
-				}
-				if (Input::IsKeyPressed(Key::W)) {
+
+				if (Input::IsKeyPressed(Key::W))
 					translation.y += speed * ts;
-				}
-				if (Input::IsKeyPressed(Key::S)) {
+
+				if (Input::IsKeyPressed(Key::S))
 					translation.y -= speed * ts;
-				}
 			}
 		};
 
@@ -74,25 +77,27 @@ namespace Ember {
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
-	void EditorLayer::OnDetach() {
+	void EditorLayer::OnDetach()
+	{
 		EB_PROFILE_FUNCTION();
 	}
 
-	void EditorLayer::OnUpdate(Timestep ts) {
+	void EditorLayer::OnUpdate(Timestep ts)
+	{
 		EB_PROFILE_FUNCTION();
 
 		if (FrameBufferSpec spec = m_FrameBuffer->GetSpec();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f &&
-			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y)) {
+			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+		{
 			m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
 
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
-		if (m_ViewportFocused) {
+		if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
-		}
 
 		Renderer2D::ResetStats();
 		m_FrameBuffer->Bind();
@@ -104,7 +109,8 @@ namespace Ember {
 		m_FrameBuffer->Unbind();
 	}
 
-	void EditorLayer::OnImGuiRender() {
+	void EditorLayer::OnImGuiRender()
+	{
 		EB_PROFILE_FUNCTION();
 
 		static bool dockspaceOpen = true;
@@ -113,7 +119,8 @@ namespace Ember {
 		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-		if (opt_fullscreen) {
+		if (opt_fullscreen)
+		{
 			ImGuiViewport* viewport = ImGui::GetMainViewport();
 			ImGui::SetNextWindowPos(viewport->Pos);
 			ImGui::SetNextWindowSize(viewport->Size);
@@ -124,47 +131,45 @@ namespace Ember {
 			window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 		}
 
-		if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) {
+		if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
 			window_flags |= ImGuiWindowFlags_NoBackground;
-		}
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 		ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
 		ImGui::PopStyleVar();
 
-		if (opt_fullscreen) {
+		if (opt_fullscreen)
 			ImGui::PopStyleVar(2);
-		}
 
 		// DockSpace
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiStyle& style = ImGui::GetStyle();
 		float minWinSizeX = style.WindowMinSize.x;
 		style.WindowMinSize.x = 370.0f;
-		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 		}
 
 		style.WindowMinSize.x = minWinSizeX;
 
-		if (ImGui::BeginMenuBar()) {
-			if (ImGui::BeginMenu("File")) {
-				if (ImGui::MenuItem("New", "Ctrl+N")) {
+		if (ImGui::BeginMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("New", "Ctrl+N"))
 					NewScene();
-				}
 
-				if (ImGui::MenuItem("Open...", "Ctrl+0")) {
+				if (ImGui::MenuItem("Open...", "Ctrl+0"))
 					OpenScene();
-				}
 
-				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S")) {
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					SaveSceneAs();
-				}
 
-				if (ImGui::MenuItem("Exit")) {
+				if (ImGui::MenuItem("Exit"))
 					App::Get().Close();
-				}
+
 				ImGui::EndMenu();
 			}
 
@@ -202,36 +207,41 @@ namespace Ember {
 		ImGui::End();
 	}
 
-	void EditorLayer::OnEvent(Event& e) {
+	void EditorLayer::OnEvent(Event& e)
+	{
 		m_CameraController.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<KeyPressedEvent>(EB_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 	}
 
-	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e) {
-		if (e.GetRepeatCount() > 0) {
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		if (e.GetRepeatCount() > 0)
 			return false;
-		}
 
 		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
 		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
 
-		switch (e.GetKeyCode()) {
+		switch (e.GetKeyCode())
+		{
 			case Key::N:
-				if (control) {
+				if (control)
+				{
 					EB_CORE_TRACE("ctrl+N pressed");
 					NewScene();
 				}
 				break;
 			case Key::O:
-				if (control) {
+				if (control)
+				{
 					EB_CORE_TRACE("ctrl+O pressed");
 					OpenScene();
 				}
 				break;
 			case Key::S:
-				if (control && shift) {
+				if (control && shift)
+				{
 					SaveSceneAs();
 				}
 				break;
@@ -240,16 +250,19 @@ namespace Ember {
 		}
 	}
 
-	void EditorLayer::NewScene() {
+	void EditorLayer::NewScene()
+	{
 		m_ActiveScene = CreateRef<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
-	void EditorLayer::OpenScene() {
+	void EditorLayer::OpenScene()
+	{
 		std::string filePath = FileDialogs::OpenFile("Ember Scene (*.ember)\0*.ember\0");
 
-		if (!filePath.empty()) {
+		if (!filePath.empty())
+		{
 			m_ActiveScene = CreateRef<Scene>();
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
@@ -259,10 +272,12 @@ namespace Ember {
 		}
 	}
 
-	void EditorLayer::SaveSceneAs() {
+	void EditorLayer::SaveSceneAs()
+	{
 		std::string filePath = FileDialogs::SaveFile("Ember Scene (*.ember)\0*.ember\0");
 
-		if (!filePath.empty()) {
+		if (!filePath.empty())
+		{
 			SceneSerializer serializer(m_ActiveScene);
 			serializer.Serialize(filePath);
 		}

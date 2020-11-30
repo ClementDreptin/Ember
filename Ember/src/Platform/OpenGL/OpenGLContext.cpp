@@ -4,11 +4,13 @@
 #include <glad/glad.h>
 
 namespace Ember {
-	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle) {
+	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
+	{
 		EB_CORE_ASSERT(windowHandle, "windowHandle is null!");
 	}
 
-	void OpenGLContext::Init() {
+	void OpenGLContext::Init()
+	{
 		EB_PROFILE_FUNCTION();
 
 		glfwMakeContextCurrent(m_WindowHandle);
@@ -16,7 +18,8 @@ namespace Ember {
 		EB_CORE_ASSERT(status, "Failed to initialize Glad!");
 	}
 
-	void OpenGLContext::SwapBuffers() {
+	void OpenGLContext::SwapBuffers()
+	{
 		EB_PROFILE_FUNCTION();
 
 		glfwSwapBuffers(m_WindowHandle);

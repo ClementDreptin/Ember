@@ -6,7 +6,8 @@
 #include <vector>
 
 namespace Ember {
-	class LayerStack {
+	class LayerStack
+	{
 	public:
 		LayerStack();
 		~LayerStack();

@@ -4,8 +4,10 @@
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace Ember {
-	Ref<VertexArray> VertexArray::Create() {
-		switch (Renderer::GetAPI()) {
+	Ref<VertexArray> VertexArray::Create()
+	{
+		switch (Renderer::GetAPI())
+		{
 			case RendererAPI::API::None:
 				EB_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 				return nullptr;

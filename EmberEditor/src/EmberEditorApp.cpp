@@ -4,17 +4,20 @@
 #include "EditorLayer.h"
 
 namespace Ember {
-	class EmberEditor : public App {
+	class EmberEditor : public App
+	{
 	public:
 		EmberEditor()
-			: App("Ember Editor") {
+			: App("Ember Editor")
+		{
 			PushLayer(new EditorLayer());
 		}
 
 		~EmberEditor() {}
 	};
 
-	App* CreateApp() {
+	App* CreateApp()
+	{
 		return new EmberEditor();
 	}
 }

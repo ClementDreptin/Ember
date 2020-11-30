@@ -5,7 +5,8 @@
 #include "Ember/Events/Event.h"
 
 namespace Ember {
-	class Layer {
+	class Layer
+	{
 	public:
 		Layer(const std::string& name = "Layer");
 		virtual ~Layer();
