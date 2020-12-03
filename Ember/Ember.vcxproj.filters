@@ -25,6 +25,9 @@
     <Filter Include="src\Ember\Scene">
       <UniqueIdentifier>{445B8436-B0E6-F1FA-B9F7-74EF25024EFB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ember\Utils">
+      <UniqueIdentifier>{87EFB136-F37A-1FFB-FC8B-A2EF68967BFB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
@@ -36,6 +39,9 @@
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\ImGuizmo">
+      <UniqueIdentifier>{73BF7F4C-DF4A-ED10-E85B-700554664911}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\glm">
       <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
@@ -168,8 +174,14 @@
     <ClInclude Include="src\Ember\Scene\SceneCamera.h">
       <Filter>src\Ember\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ember\Scene\SceneSerializer.h">
+      <Filter>src\Ember\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ember\Scene\ScriptableEntity.h">
       <Filter>src\Ember\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ember\Utils\PlatformUtils.h">
+      <Filter>src\Ember\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -197,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="src\ebpch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h">
+      <Filter>vendor\ImGuizmo</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\glm\common.hpp">
       <Filter>vendor\glm\glm</Filter>
@@ -1425,8 +1440,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ember\Scene\SceneSerializer.h" />
-    <ClInclude Include="src\Ember\Utils\PlatformUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ember\Core\App.cpp">
@@ -1489,6 +1502,9 @@
     <ClCompile Include="src\Ember\Scene\SceneCamera.cpp">
       <Filter>src\Ember\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ember\Scene\SceneSerializer.cpp">
+      <Filter>src\Ember\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1513,16 +1529,20 @@
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\ebpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp">
+      <Filter>vendor\ImGuizmo</Filter>
+    </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ember\Scene\SceneSerializer.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
   </ItemGroup>
 </Project>

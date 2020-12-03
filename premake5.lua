@@ -15,6 +15,7 @@ IncludeDir["glm"] = "Ember/vendor/glm"
 IncludeDir["stb_image"] = "Ember/vendor/stb_image"
 IncludeDir["entt"] = "Ember/vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Ember/vendor/yaml-cpp/include"
+IncludeDir["ImGuizmo"] = "Ember/vendor/ImGuizmo"
 
 include "Ember/vendor/GLFW"
 include "Ember/vendor/glad"
@@ -40,7 +41,9 @@ project "Ember"
 		"%{prj.name}/vendor/stb_image/**.h",
 		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl"
+		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
+		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp"
 	}
 
 	defines {
@@ -56,7 +59,8 @@ project "Ember"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.yaml_cpp}"
+		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links {
@@ -66,6 +70,9 @@ project "Ember"
 		"yaml-cpp",
 		"opengl32.lib"
 	}
+
+	filter "files:Ember/vendor/ImGuizmo/**.cpp"
+		flags { "NoPCH" }
 
 	filter "system:windows"
 		systemversion "latest"
