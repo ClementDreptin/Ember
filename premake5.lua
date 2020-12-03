@@ -155,7 +155,8 @@ project "EmberEditor"
 		"Ember/src",
 		"Ember/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links {"Ember"}
