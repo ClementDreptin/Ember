@@ -8,6 +8,10 @@
 
 #include "Ember/Utils/PlatformUtils.h"
 
+#include "ImGuizmo.h"
+
+#include "Ember/Math/Math.h"
+
 namespace Ember {
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f), m_SquareColor({ 0.2f, 0.3f, 0.8f, 1.0f }) {}
@@ -194,13 +198,63 @@ namespace Ember {
 
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		App::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+		App::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint32_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+		// Gizmos
+		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntity && m_GuizmoType != -1)
+		{
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+
+			float windowWidth = (float)ImGui::GetWindowWidth();
+			float windowHeight = (float)ImGui::GetWindowHeight();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+			// Camera
+			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			const glm::mat4& cameraProjection = camera.GetProjection();
+			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+			// Entity transform
+			auto& transformComponent = selectedEntity.GetComponent<TransformComponent>();
+			glm::mat4& transform = transformComponent.GetTransform();
+
+			// Snapping
+			bool snap = Input::IsKeyPressed(Key::LeftControl);
+			float snapValue = m_GuizmoType == ImGuizmo::OPERATION::ROTATE ? 45.0f : 0.5f;
+
+			float snapValues[3] = { snapValue, snapValue , snapValue };
+
+			ImGuizmo::Manipulate(
+				glm::value_ptr(cameraView),
+				glm::value_ptr(cameraProjection),
+				(ImGuizmo::OPERATION)m_GuizmoType,
+				ImGuizmo::LOCAL,
+				glm::value_ptr(transform),
+				nullptr,
+				snap ? snapValues : nullptr
+			);
+
+			if (ImGuizmo::IsUsing())
+			{
+				glm::vec3 translation, rotation, scale;
+				Math::DecomposeTransform(transform, translation, rotation, scale);
+				
+				glm::vec3 deltaRotation = rotation - transformComponent.Rotation;
+				transformComponent.Translation = translation;
+				transformComponent.Rotation += deltaRotation;
+				transformComponent.Scale = scale;
+			}
+		}
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 
@@ -227,23 +281,29 @@ namespace Ember {
 		{
 			case Key::N:
 				if (control)
-				{
-					EB_CORE_TRACE("ctrl+N pressed");
 					NewScene();
-				}
 				break;
 			case Key::O:
 				if (control)
-				{
-					EB_CORE_TRACE("ctrl+O pressed");
 					OpenScene();
-				}
 				break;
 			case Key::S:
 				if (control && shift)
-				{
 					SaveSceneAs();
-				}
+				break;
+
+			// Guizmos
+			case Key::Q:
+				m_GuizmoType = -1;
+				break;
+			case Key::W:
+				m_GuizmoType = ImGuizmo::OPERATION::TRANSLATE;
+				break;
+			case Key::E:
+				m_GuizmoType = ImGuizmo::OPERATION::ROTATE;
+				break;
+			case Key::R:
+				m_GuizmoType = ImGuizmo::OPERATION::SCALE;
 				break;
 			default:
 				break;
