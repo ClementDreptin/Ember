@@ -48,8 +48,8 @@ namespace Ember {
 	void App::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.dispatch<WindowCloseEvent>(EB_BIND_EVENT_FN(App::OnWindowClose));
-		dispatcher.dispatch<WindowResizeEvent>(EB_BIND_EVENT_FN(App::OnWindowResize));
+		dispatcher.Dispatch<WindowCloseEvent>(EB_BIND_EVENT_FN(App::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(EB_BIND_EVENT_FN(App::OnWindowResize));
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{

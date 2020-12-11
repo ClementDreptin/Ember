@@ -56,7 +56,7 @@ namespace Ember {
 		EventDispatcher(Event& event) : m_Event(event) {}
 
 		template<typename T>
-		bool dispatch(EventFn<T> func)
+		bool Dispatch(EventFn<T> func)
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
