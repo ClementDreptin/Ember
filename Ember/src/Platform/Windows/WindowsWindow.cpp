@@ -23,22 +23,16 @@ namespace Ember {
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
-		EB_PROFILE_FUNCTION();
-
 		Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
-		EB_PROFILE_FUNCTION();
-
 		Shutdown();
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
-		EB_PROFILE_FUNCTION();
-
 		m_Data.title = props.title;
 		m_Data.width = props.width;
 		m_Data.height = props.height;
@@ -156,23 +150,17 @@ namespace Ember {
 
 	void WindowsWindow::Shutdown()
 	{
-		EB_PROFILE_FUNCTION();
-
 		glfwDestroyWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
-		EB_PROFILE_FUNCTION();
-
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (enabled)
 			glfwSwapInterval(1);
 		else

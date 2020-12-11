@@ -9,8 +9,6 @@ namespace Ember {
 
 	void Renderer::Init()
 	{
-		EB_PROFILE_FUNCTION();
-
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

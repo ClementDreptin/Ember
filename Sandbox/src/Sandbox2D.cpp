@@ -11,59 +11,44 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
-	EB_PROFILE_FUNCTION();
-
 	m_CheckerboardTexture = Ember::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
-void Sandbox2D::OnDetach()
-{
-	EB_PROFILE_FUNCTION();
-}
+void Sandbox2D::OnDetach() {}
 
 void Sandbox2D::OnUpdate(Ember::Timestep ts)
 {
-	EB_PROFILE_SCOPE("CameraController::OnUpdate");
-
 	m_CameraController.OnUpdate(ts);
 
 	Ember::Renderer2D::ResetStats();
 
-	{
-		EB_PROFILE_SCOPE("Renderer Prep");
-		Ember::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-		Ember::RenderCommand::Clear();
-	}
+	Ember::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+	Ember::RenderCommand::Clear();
 
-	{
-		static float rotation = 0.0f;
-		rotation += ts * 50.0f;
+	static float rotation = 0.0f;
+	rotation += ts * 50.0f;
 
-		EB_PROFILE_SCOPE("Renderer Draw");
-		Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		Ember::Renderer2D::DrawQuad({ -1.0f, 0.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-		Ember::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		Ember::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, m_CheckerboardTexture, 10.0f);
-		Ember::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, glm::radians(rotation), { 1.0f, 1.0f }, m_CheckerboardTexture, 20.0f);
-		Ember::Renderer2D::EndScene();
-		
-		Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		for (float y = -5.0f; y < 5; y += 0.5f)
+	Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	Ember::Renderer2D::DrawQuad({ -1.0f, 0.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
+	Ember::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+	Ember::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, m_CheckerboardTexture, 10.0f);
+	Ember::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, glm::radians(rotation), { 1.0f, 1.0f }, m_CheckerboardTexture, 20.0f);
+	Ember::Renderer2D::EndScene();
+	
+	Ember::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	for (float y = -5.0f; y < 5; y += 0.5f)
+	{
+		for (float x = -5.0f; x < 5; x += 0.5f)
 		{
-			for (float x = -5.0f; x < 5; x += 0.5f)
-			{
-				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-				Ember::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-			}
+			glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
+			Ember::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
 		}
-		Ember::Renderer2D::EndScene();
 	}
+	Ember::Renderer2D::EndScene();
 }
 
 void Sandbox2D::OnImGuiRender()
 {
-	EB_PROFILE_FUNCTION();
-
 	ImGui::Begin("Settings");
 
 	auto stats = Ember::Renderer2D::GetStats();

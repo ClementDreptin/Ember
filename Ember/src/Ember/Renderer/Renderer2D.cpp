@@ -45,8 +45,6 @@ namespace Ember {
 
 	void Renderer2D::Init()
 	{
-		EB_PROFILE_FUNCTION();
-
 		s_Data.QuadVertexArray = VertexArray::Create();
 
 		s_Data.QuadVertexBuffer = VertexBuffer::Create(s_Data.MaxVertices * sizeof(QuadVertex));
@@ -101,15 +99,10 @@ namespace Ember {
 		s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 	}
 
-	void Renderer2D::Shutdown()
-	{
-		EB_PROFILE_FUNCTION();
-	}
+	void Renderer2D::Shutdown() {}
 
 	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
 	{
-		EB_PROFILE_FUNCTION();
-
 		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
 
 		s_Data.TextureShader->Bind();
@@ -123,8 +116,6 @@ namespace Ember {
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
-		EB_PROFILE_FUNCTION();
-
 		s_Data.TextureShader->Bind();
 		s_Data.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
@@ -136,8 +127,6 @@ namespace Ember {
 
 	void Renderer2D::EndScene()
 	{
-		EB_PROFILE_FUNCTION();
-
 		uint32_t dataSize = (uint8_t*)s_Data.QuadVertexBufferPointer - (uint8_t*)s_Data.QuadVertexBufferBase;
 		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
@@ -174,8 +163,6 @@ namespace Ember {
 	// Vec3 for position - no rotation - color
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		EB_PROFILE_FUNCTION();
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
@@ -191,8 +178,6 @@ namespace Ember {
 	// Vec3 for position - rotation (radians) - color
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
@@ -215,8 +200,6 @@ namespace Ember {
 	// Vec3 for position - no rotation - texture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		EB_PROFILE_FUNCTION();
-
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
@@ -232,8 +215,6 @@ namespace Ember {
 	// Vec3 for position - no rotation - subtexture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
@@ -272,8 +253,6 @@ namespace Ember {
 	// Vec3 for position - rotation (radians) - texture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
@@ -311,8 +290,6 @@ namespace Ember {
 	// Vec3 for position - rotation (radians) - subtexture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
@@ -346,8 +323,6 @@ namespace Ember {
 	// Transform - color
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
@@ -360,8 +335,6 @@ namespace Ember {
 	// Transform - texture - tiling factor - tint color
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 

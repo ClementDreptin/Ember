@@ -18,8 +18,6 @@ namespace Ember {
 
 	void EditorLayer::OnAttach()
 	{
-		EB_PROFILE_FUNCTION();
-
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
 		FrameBufferSpec fbSpec;
@@ -81,15 +79,10 @@ namespace Ember {
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
-	void EditorLayer::OnDetach()
-	{
-		EB_PROFILE_FUNCTION();
-	}
+	void EditorLayer::OnDetach() {}
 
 	void EditorLayer::OnUpdate(Timestep ts)
 	{
-		EB_PROFILE_FUNCTION();
-
 		if (FrameBufferSpec spec = m_FrameBuffer->GetSpec();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f &&
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
@@ -115,8 +108,6 @@ namespace Ember {
 
 	void EditorLayer::OnImGuiRender()
 	{
-		EB_PROFILE_FUNCTION();
-
 		static bool dockspaceOpen = true;
 		static bool opt_fullscreen_persistant = true;
 		bool opt_fullscreen = opt_fullscreen_persistant;
