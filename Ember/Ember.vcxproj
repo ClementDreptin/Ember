@@ -150,6 +150,7 @@
     <ClInclude Include="src\Ember\Core\LayerStack.h" />
     <ClInclude Include="src\Ember\Core\Log.h" />
     <ClInclude Include="src\Ember\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Ember\Core\MouseCodes.h" />
     <ClInclude Include="src\Ember\Core\Timestep.h" />
     <ClInclude Include="src\Ember\Core\Window.h" />
     <ClInclude Include="src\Ember\Debug\Instrumentor.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="src\Ember\Math\Math.h" />
     <ClInclude Include="src\Ember\Renderer\Buffer.h" />
     <ClInclude Include="src\Ember\Renderer\Camera.h" />
+    <ClInclude Include="src\Ember\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Ember\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Ember\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Ember\Renderer\OrthographicCamera.h" />
@@ -608,6 +610,7 @@
     <ClCompile Include="src\Ember\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Ember\Math\Math.cpp" />
     <ClCompile Include="src\Ember\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Ember\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Ember\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Ember\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Ember\Renderer\OrthographicCameraController.cpp" />

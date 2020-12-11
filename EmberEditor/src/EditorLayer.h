@@ -2,6 +2,7 @@
 
 #include "Ember.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Ember/Renderer/EditorCamera.h"
 
 namespace Ember {
 	class EditorLayer : public Layer
@@ -30,6 +31,8 @@ namespace Ember {
 		Entity m_SecondCamera;
 
 		bool m_PrimaryCamera = true;
+
+		EditorCamera m_EditorCamera;
 
 		Ref<Texture2D> m_CheckerboardTexture;
 
