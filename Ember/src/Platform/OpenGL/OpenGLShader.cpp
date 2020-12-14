@@ -76,7 +76,7 @@ namespace Ember {
 			EB_CORE_ASSERT(eol != std::string::npos, "Syntax Error");
 			size_t begin = pos + typeTokenLength + 1;
 			std::string type = shaderSource.substr(begin, eol - begin);
-			EB_CORE_ASSERT(shaderTypeFromString(type), "Invalid shader specified");
+			EB_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader specified");
 
 			size_t nextLinePos = shaderSource.find_first_not_of("\r\n", eol);
 			pos = shaderSource.find(typeToken, nextLinePos);

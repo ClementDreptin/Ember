@@ -42,7 +42,7 @@ namespace Ember {
 
 	void ShaderLibrary::Add(const std::string& name, const Ref<Shader>& shader)
 	{
-		EB_CORE_ASSERT(!exists(name), "Shader already exists!");
+		EB_CORE_ASSERT(!Exists(name), "Shader already exists!");
 		m_Shaders[name] = shader;
 	}
 
@@ -62,7 +62,7 @@ namespace Ember {
 
 	Ref<Shader> ShaderLibrary::Get(const std::string& name)
 	{
-		EB_CORE_ASSERT(exists(name), "Shader not found!");
+		EB_CORE_ASSERT(Exists(name), "Shader not found!");
 		return m_Shaders[name];
 	}
 
