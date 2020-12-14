@@ -19,6 +19,9 @@
     <Filter Include="src\Ember\ImGui">
       <UniqueIdentifier>{5163D435-BDEE-41FA-C6FF-C4EE320A9EFA}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Ember\Math">
+      <UniqueIdentifier>{20AAE1F9-0C78-D5FF-F50B-4626E178B164}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Ember\Renderer">
       <UniqueIdentifier>{6DD40DCC-59B8-CE21-C218-C974AE1BB9A3}</UniqueIdentifier>
     </Filter>
@@ -72,6 +75,9 @@
     <ClInclude Include="src\Ember\Core\App.h">
       <Filter>src\Ember\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ember\Core\Assert.h">
+      <Filter>src\Ember\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ember\Core\Core.h">
       <Filter>src\Ember\Core</Filter>
     </ClInclude>
@@ -94,6 +100,12 @@
       <Filter>src\Ember\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ember\Core\MouseButtonCodes.h">
+      <Filter>src\Ember\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ember\Core\MouseCodes.h">
+      <Filter>src\Ember\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ember\Core\PlatformDetection.h">
       <Filter>src\Ember\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ember\Core\Timestep.h">
@@ -120,10 +132,16 @@
     <ClInclude Include="src\Ember\ImGui\ImGuiLayer.h">
       <Filter>src\Ember\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ember\Math\Math.h">
+      <Filter>src\Ember\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ember\Renderer\Buffer.h">
       <Filter>src\Ember\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ember\Renderer\Camera.h">
+      <Filter>src\Ember\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ember\Renderer\EditorCamera.h">
       <Filter>src\Ember\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ember\Renderer\FrameBuffer.h">
@@ -1440,9 +1458,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ember\Math\Math.h" />
-    <ClInclude Include="src\Ember\Renderer\EditorCamera.h" />
-    <ClInclude Include="src\Ember\Core\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ember\Core\App.cpp">
@@ -1457,10 +1472,19 @@
     <ClCompile Include="src\Ember\Core\Log.cpp">
       <Filter>src\Ember\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ember\ImGui\ImGuiBuild.cpp">
+      <Filter>src\Ember\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ember\ImGui\ImGuiLayer.cpp">
       <Filter>src\Ember\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ember\Math\Math.cpp">
+      <Filter>src\Ember\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Ember\Renderer\Buffer.cpp">
+      <Filter>src\Ember\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ember\Renderer\EditorCamera.cpp">
       <Filter>src\Ember\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Ember\Renderer\FrameBuffer.cpp">
@@ -1547,7 +1571,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ember\Math\Math.cpp" />
-    <ClCompile Include="src\Ember\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>
