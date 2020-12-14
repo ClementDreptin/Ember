@@ -2,17 +2,24 @@
 
 #include <memory>
 
-#ifndef EB_PLATFORM_WINDOWS
-	#error Ember only supports Windows!
+#include "Ember/Core/PlatformDetection.h"
+
+#ifdef EB_DEBUG
+	#if defined(EB_PLATFORM_WINDOWS)
+		#define EB_DEBUGBREAK() __debugbreak()
+	#elif defined(EB_PLATFORM_LINUX)
+		#include <signal.h>
+		#define EB_DEBUGBREAK() raise(SIGTRAP)
+	#else
+		#error "Platform doesn't support debugbreak yet!"
+	#endif
+	#define EB_ENABLE_ASSERTS
+#else
+	#define EB_DEBUGBREAK()
 #endif
 
-#ifdef EB_ENABLE_ASSERTS
-	#define EB_ASSERT(x, ...) { if(!(x)) { EB_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define EB_CORE_ASSERT(x, ...) { if(!(x)) { EB_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#else
-	#define EB_ASSERT(x, ...)
-	#define EB_CORE_ASSERT(x, ...)
-#endif
+#define EB_EXPAND_MACRO(x) x
+#define EB_STRINGIFY_MACRO(x) #x
 
 #define BIT(x) (1 << x)
 
@@ -35,3 +42,6 @@ namespace Ember {
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 }
+
+#include "Ember/Core/Log.h"
+#include "Ember/Core/Assert.h"
