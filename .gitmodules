@@ -13,3 +13,6 @@
 [submodule "Ember/vendor/ImGuizmo"]
 	path = Ember/vendor/ImGuizmo
 	url = https://github.com/thecherno/imguizmo
+[submodule "Ember/vendor/yaml-cpp"]
+	path = Ember/vendor/yaml-cpp
+	url = https://github.com/TheCherno/yaml-cpp
