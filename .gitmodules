@@ -1,9 +1,6 @@
 [submodule "Ember/vendor/spdlog"]
 	path = Ember/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "Ember/vendor/GLFW"]
-	path = Ember/vendor/GLFW
-	url = https://github.com/TheCherno/glfw
 [submodule "Ember/vendor/imgui"]
 	path = Ember/vendor/imgui
 	url = https://github.com/TheCherno/imgui
