@@ -4,6 +4,3 @@
 [submodule "Ember/vendor/glm"]
 	path = Ember/vendor/glm
 	url = https://github.com/g-truc/glm
-[submodule "Ember/vendor/yaml-cpp"]
-	path = Ember/vendor/yaml-cpp
-	url = https://github.com/TheCherno/yaml-cpp
