@@ -12,7 +12,8 @@
 #include "Ember/ImGui/ImGuiLayer.h"
 
 namespace Ember {
-	class App {
+	class App
+	{
 	public:
 		App(const std::string& name = "Ember App");
 		virtual ~App();
