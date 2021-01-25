@@ -1,8 +1,8 @@
 #include "ebpch.h"
 #include "EditorCamera.h"
 
-#include "Ember/Core/Input.h";
-#include "Ember/Core/KeyCodes.h";
+#include "Ember/Core/Input.h"
+#include "Ember/Core/KeyCodes.h"
 #include "Ember/Core/MouseCodes.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
