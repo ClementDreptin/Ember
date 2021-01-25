@@ -21,6 +21,7 @@ namespace Ember {
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
 		FrameBufferSpec fbSpec;
+		fbSpec.Attachments = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::Depth };
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		m_FrameBuffer = FrameBuffer::Create(fbSpec);

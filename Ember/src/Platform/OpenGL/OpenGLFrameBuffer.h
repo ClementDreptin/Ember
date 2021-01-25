@@ -16,12 +16,17 @@ namespace Ember {
 
 		virtual void Resize(uint32_t width, uint32_t height) override;
 
-		virtual uint32_t GetColorAttachmentRendererID() const override { return m_ColorAttachment; }
+		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override { EB_CORE_ASSERT(index < m_ColorAttachments.size()); return m_ColorAttachments[index]; }
 
 		virtual const FrameBufferSpec& GetSpec() const override { return m_Spec; }
 	private:
 		uint32_t m_RendererID = 0;
-		uint32_t m_ColorAttachment = 0, m_DepthAttachment = 0;
 		FrameBufferSpec m_Spec;
+
+		std::vector<FrameBufferTextureSpec> m_ColorAttachmentSpecs;
+		FrameBufferTextureSpec m_DepthAttachmentSpec;
+
+		std::vector<uint32_t> m_ColorAttachments;
+		uint32_t m_DepthAttachment = 0;
 	};
 }
