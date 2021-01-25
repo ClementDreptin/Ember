@@ -25,8 +25,6 @@ project "Sandbox"
 	filter "system:windows"
 		systemversion "latest"
 
-		defines {"EB_PLATFORM_WINDOWS"}
-
 	filter "configurations:Debug"
 		defines "EB_DEBUG"
 		runtime "Debug"
