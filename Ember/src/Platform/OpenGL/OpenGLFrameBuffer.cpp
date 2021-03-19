@@ -22,12 +22,12 @@ namespace Ember {
 			glBindTexture(TextureTarget(multisampled), id);
 		}
 
-		static void AttachColorTexture(uint32_t id, int samples, GLenum format, uint32_t width, uint32_t height, int index)
+		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index)
 		{
 			bool multisampled = samples > 1;
 			if (!multisampled)
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -36,7 +36,7 @@ namespace Ember {
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			}
 			else
-				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_FALSE);
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, TextureTarget(multisampled), id, 0);
 		}
@@ -69,6 +69,18 @@ namespace Ember {
 				default:
 					return false;
 			}
+		}
+
+		static GLenum EmberTextureFormatToGL(FrameBufferTextureFormat format)
+		{
+			switch (format)
+			{
+				case FrameBufferTextureFormat::RGBA8: return GL_RGBA8;
+				case FrameBufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+			}
+
+			EB_CORE_ASSERT(false);
+			return 0;
 		}
 	}
 
@@ -123,7 +135,10 @@ namespace Ember {
 				switch (m_ColorAttachmentSpecs[i].TextureFormat)
 				{
 					case FrameBufferTextureFormat::RGBA8:
-						Utils::AttachColorTexture(m_ColorAttachments[i], m_Spec.Samples, GL_RGBA8, m_Spec.Width, m_Spec.Height, i);
+						Utils::AttachColorTexture(m_ColorAttachments[i], m_Spec.Samples, GL_RGBA8, GL_RGBA, m_Spec.Width, m_Spec.Height, i);
+						break;
+					case FrameBufferTextureFormat::RED_INTEGER:
+						Utils::AttachColorTexture(m_ColorAttachments[i], m_Spec.Samples, GL_R32I, GL_RED_INTEGER, m_Spec.Width, m_Spec.Height, i);
 						break;
 				}
 			}
@@ -178,5 +193,27 @@ namespace Ember {
 		m_Spec.Width = width;
 		m_Spec.Height = height;
 		Invalidate();
+	}
+
+	int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+	{
+		EB_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
+
+		int pixelData;
+
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+
+		return pixelData;
+	}
+
+	void OpenGLFrameBuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+	{
+		EB_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
+
+		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
+		spec.TextureFormat;
+
+		glClearTexImage(m_ColorAttachments[attachmentIndex], 0, Utils::EmberTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
 	}
 }

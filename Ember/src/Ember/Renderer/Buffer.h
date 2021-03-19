@@ -29,20 +29,20 @@ namespace Ember {
 
 	struct BufferElement
 	{
-		std::string name;
-		ShaderDataType type;
-		uint32_t size;
-		uint32_t offset;
-		bool normalized;
+		std::string Name;
+		ShaderDataType Type;
+		uint32_t Size;
+		uint32_t Offset;
+		bool Normalized;
 
 		BufferElement() {}
 
 		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-			: name(name), type(type), size(shaderDataTypeSize(type)), offset(0), normalized(normalized) {}
+			: Name(name), Type(type), Size(shaderDataTypeSize(type)), Offset(0), Normalized(normalized) {}
 
 		uint32_t GetComponentCount() const
 		{
-			switch (type)
+			switch (Type)
 			{
 				case ShaderDataType::Float: return 1;
 				case ShaderDataType::Float2: return 2;
@@ -73,7 +73,7 @@ namespace Ember {
 		}
 
 		inline const std::vector<BufferElement> GetElements() const { return m_Elements; }
-		inline const uint32_t getStride() const { return m_Stride; }
+		inline const uint32_t GetStride() const { return m_Stride; }
 
 		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
 		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
@@ -90,9 +90,9 @@ namespace Ember {
 
 			for (auto& element : m_Elements)
 			{
-				element.offset = offset;
-				offset += element.size;
-				m_Stride += element.size;
+				element.Offset = offset;
+				offset += element.Size;
+				m_Stride += element.Size;
 			}
 		}
 	};
