@@ -17,6 +17,7 @@ namespace Ember {
 		void OnImGuiRender();
 
 		Entity GetSelectedEntity() const { return m_SelectionContext; }
+		void SetSelectedEntity(Entity entity);
 	private:
 		Ref<Scene> m_Context;
 		Entity m_SelectionContext;

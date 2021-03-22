@@ -13,6 +13,7 @@
 #include "Ember/Core/Input.h"
 #include "Ember/Core/KeyCodes.h"
 #include "Ember/Core/MouseButtonCodes.h"
+#include "Ember/Core/MouseCodes.h"
 #include "Ember/Renderer/OrthographicCameraController.h"
 
 #include "Ember/ImGui/ImGuiLayer.h"
